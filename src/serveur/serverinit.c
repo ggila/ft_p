@@ -6,7 +6,7 @@
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/07 18:12:03 by ggilaber          #+#    #+#             */
-/*   Updated: 2015/10/07 18:43:58 by ggilaber         ###   ########.fr       */
+/*   Updated: 2015/10/08 22:21:33 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,17 @@ static void	sininit(struct sockaddr_in	*sin, int port)
 
 int	serverinit(int port)
 {
-	int					socket;
+	int					sock;
 	struct protoent		*prot;
 	struct sockaddr_in	sin;
 
 	if ((prot = getprotobyname("tcp")) == 0)
-		return (KO);
-	if((socket = socket(PF_INET, SOCK_STREAM, prot->p_proto)) == -1)
-		return (KO);
+		return (ft_putstr("getprotobyname() error\n"), KO);
+	if ((sock = socket(PF_INET, SOCK_STREAM, prot->p_proto)) == -1)
+		return (ft_putstr("socket() error\n"), KO);
 	sininit(&sin, port);
 	if (bind(sock, (const struct sockaddr *) &sin, sizeof(sin)) == -1)
-		return (KO);
+		return (ft_putstr("bind() error\n"), KO);
 	listen(sock, NB_CONNEX);
-	return (socket);
+	return (sock);
 }

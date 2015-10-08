@@ -1,36 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   serverloop.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/10/07 18:03:55 by ggilaber          #+#    #+#             */
-/*   Updated: 2015/10/07 18:45:59 by ggilaber         ###   ########.fr       */
+/*   Created: 2015/10/08 22:07:17 by ggilaber          #+#    #+#             */
+/*   Updated: 2015/10/08 22:52:08 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_p.h"
 
-static void	usage(char *prog)
+void	serverloop(int sock)
 {
-	ft_putstr("Usage: ");
-	ft_putstr(prog);
-	ft_putstr(" <port>\n");
-	exit(KO);
-}
+	struct sockaddr_in	client_sin;
+	unsigned int		cs_len;
+	int					client_sock;
+	int					r;
+	char				buf[25];
 
-int			main(int ac, char **av)
-{
-	int	port;
-	int	socket;
-
-	if (ac != 2)
-		usage(av[0]);
-	port = ft_atoi(av[1]);
-	if ((socket = serverinit(port)) == KO)
-		return (KO);
-	tobenamed(socket)
-	close(socket);
-	return (OK)
+	client_sock = accept(sock, (struct sockaddr*)&client_sin, &cs_len);
+	r = read(client_sock, buf, 25);
+	buf[r] = '\0';
+	ft_putstr(buf);
+	close(client_sock);
 }
