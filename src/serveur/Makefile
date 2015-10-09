@@ -24,10 +24,7 @@ NAME = serveur
 
 SRC = main.c\
 	  serverinit.c\
-	  serverloop.c\
-	  lib/ft_putstr.c\
-	  lib/ft_putchar.c\
-	  lib/ft_atoi.c
+	  serverloop.c
 
 OBJ_DIR = obj
 OBJ = $(SRC:.c=.o)
@@ -39,25 +36,18 @@ HEADER = $(addprefix $(inc), $(NAME).h)
 
 all : $(NAME)
 
-$(NAME) : echo_make $(OBJ_PATH)
-	@echo "gcc -f -o $(NAME) .o -L"
-	@$(CC) $(FLAGS) -o $(NAME) $(OBJ_PATH)
-
-echo_make :
-	@echo "$(C_WHITE)make ./$(NAME)$(C_DEFAULT)"
+$(NAME) : $(OBJ_PATH)
+	@$(CC) $(FLAGS) -o $(NAME) $(OBJ_PATH) ../lib/lib.a
 
 $(OBJ_DIR)/%.o : %.c
 	@echo "\t$(C_BLACK)gcc -f -c $^ -o .o$(C_DEFAULT)"
 	@mkdir -p obj/lib
-#	@echo "\t$(C_BLACK)gcc -flag -I./inc/ -c $^ -o $@$(C_DEFAULT)"
 	@$(CC) $(FLAGS) $(INC) -c $^ -o $@
 
 clean :
-	@echo "$(C_BLACK)rm -rf ./$(OBJ_DIR)/$(C_DEFAULT)"
 	@rm -rf $(OBJ_PATH)
 
 fclean : clean
-	@echo "$(C_BLACK)rm -rf ./$(NAME)$(C_DEFAULT)"
 	@rm -rf $(NAME)
 
 re : fclean all

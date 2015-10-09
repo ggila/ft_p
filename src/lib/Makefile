@@ -5,36 +5,47 @@
 #                                                     +:+ +:+         +:+      #
 #    By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2015/10/08 19:45:49 by ggilaber          #+#    #+#              #
-#    Updated: 2015/10/09 18:35:25 by ggilaber         ###   ########.fr        #
+#    Created: 2014/11/03 13:17:44 by ggilaber          #+#    #+#              #
+#    Updated: 2015/10/09 18:33:41 by ggilaber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 .PHONY : clean fclean re all
 
-all: serveur client
+C_DEFAULT =		\033[0m
+C_BLACK = 		\033[1;30m
+C_GREY =		\033[1;37m
 
-serveur: src/lib/lib.a
-	@echo "make serveur"
-	@make -C src/serveur/
-	@mv src/serveur/serveur .
+ITER = 0
 
-client: src/lib/lib.a
-	@echo "make client"
-	@make -C src/client/
-	@mv src/client/client .
+CC = gcc
 
-src/lib/lib.a:
-	@echo 'make lib'
-	@make -C src/lib
-	@echo "\n"
+FLAGS = -Wall -Werror -Wextra
 
-clean:
-	make -C src/client clean
-	make -C src/serveur clean
+NAME = lib.a
 
-fclean: clean
-	make -C src/lib fclean
-	rm -f serveur client
+SRC = ft_atoi.c\
+	  ft_putstr.c\
+	  ft_putchar.c
 
-re: fclean all
+OBJ_DIR = obj
+OBJ = $(SRC:%.c=%.o)
+OBJ_PATH = $(addprefix $(OBJ_DIR)/, $(OBJ))
+
+
+all : $(NAME)
+
+$(NAME) : $(OBJ_PATH)
+	@ar rc  $(NAME) $(OBJ_PATH)
+	@ranlib $(NAME)
+	@rm -rf $(OBJ_DIR)
+
+$(OBJ_DIR)/%.o : %.c
+	@printf "$(C_BLACK).$(C_DEFAULT)"
+	@mkdir -p $(OBJ_DIR)
+	@$(CC) $(FLAGS) -c $^ -o $@
+
+fclean :
+	@rm -rf $(NAME)
+
+re : fclean all
