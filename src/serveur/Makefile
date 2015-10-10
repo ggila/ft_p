@@ -24,7 +24,8 @@ NAME = serveur
 
 SRC = main.c\
 	  serverinit.c\
-	  serverloop.c
+	  serverloop.c\
+	  printclient.c
 
 OBJ_DIR = obj
 OBJ = $(SRC:.c=.o)

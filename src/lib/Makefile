@@ -6,7 +6,7 @@
 #    By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2014/11/03 13:17:44 by ggilaber          #+#    #+#              #
-#    Updated: 2015/10/09 18:33:41 by ggilaber         ###   ########.fr        #
+#    Updated: 2015/10/10 23:21:12 by ggilaber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,8 +25,12 @@ FLAGS = -Wall -Werror -Wextra
 NAME = lib.a
 
 SRC = ft_atoi.c\
+	  ft_putnbr.c\
+	  ft_putnbr_fd.c\
 	  ft_putstr.c\
-	  ft_putchar.c
+	  ft_putchar.c\
+	  ft_putchar_fd.c\
+	  ft_memset.c
 
 OBJ_DIR = obj
 OBJ = $(SRC:%.c=%.o)
