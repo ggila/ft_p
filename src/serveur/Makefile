@@ -25,6 +25,7 @@ NAME = serveur
 SRC = main.c\
 	  serverinit.c\
 	  serverloop.c\
+	  listenclient.c\
 	  printclient.c
 
 OBJ_DIR = obj

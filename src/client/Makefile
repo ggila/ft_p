@@ -23,7 +23,8 @@ FLAGS = -Wall -Werror -Wextra
 NAME = client
 
 SRC = main.c\
-	  clientinit.c
+	clientinit.c\
+	discuss.c
 
 OBJ_DIR = obj
 OBJ = $(SRC:.c=.o)

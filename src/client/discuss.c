@@ -1,34 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   serverloop.c                                       :+:      :+:    :+:   */
+/*   discuss.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/10/08 22:07:17 by ggilaber          #+#    #+#             */
-/*   Updated: 2015/10/11 20:25:30 by ggilaber         ###   ########.fr       */
+/*   Created: 2015/10/11 20:59:38 by ggilaber          #+#    #+#             */
+/*   Updated: 2015/10/11 21:21:30 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_p.h"
 
-static void	printfd(void)
+void	discuss(int sock)
 {
-	int i;
+	char	buf[80];
+	int		r;
 
-	i = 0;
-	ft_putchar('{');
-	while (g_client[i].sock)
+	while (1)
 	{
-		ft_putnbr(g_client[i].sock);
-		if (g_client[++i].sock)
-			ft_putstr(", ");
+		r = read(0, buf, 80);
+		buf[r] = 0;
+		ft_putstr_fd(buf, sock);
 	}
-	ft_putchar('}');
-	ft_putchar('\n');
-}
-
-void	printclient(void)
-{
-	printfd();
 }

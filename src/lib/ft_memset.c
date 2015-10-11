@@ -6,7 +6,7 @@
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/11/07 03:29:09 by ggilaber          #+#    #+#             */
-/*   Updated: 2015/10/10 22:53:37 by ggilaber         ###   ########.fr       */
+/*   Updated: 2015/10/11 19:09:26 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ void *ft_memset(void *b, int c, size_t len)
 	if (!b)
 		return (NULL);
 	i = 0;
-	l = 0;
-	while (i < 8)
+	l = -1;
+	while (++i < 8)
 		l += c << (8 * i);
 	while (i < len / 8)
 	{

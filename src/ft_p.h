@@ -6,7 +6,7 @@
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/07 18:09:19 by ggilaber          #+#    #+#             */
-/*   Updated: 2015/10/10 23:52:57 by ggilaber         ###   ########.fr       */
+/*   Updated: 2015/10/11 20:59:26 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include <stdlib.h>
 # include <unistd.h>
+# include <string.h>
 # include <sys/socket.h>
 # include <netdb.h>
 # include <netinet/in.h>
@@ -38,10 +39,12 @@ int				g_max;
 void	quit(char *str);
 int		serverinit(int port);
 void	serverloop(int socket);
+void	listenclient(int sock, fd_set *all);
 void	printclient(void);
 
 //client
 int		clientinit(char *addr, int port);
+void	discuss(int sock);
 
 //lib
 void	ft_putnbr(int n);
