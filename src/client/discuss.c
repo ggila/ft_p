@@ -1,37 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   discuss.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/07 03:29:09 by ggilaber          #+#    #+#             */
-/*   Updated: 2015/10/10 22:53:37 by ggilaber         ###   ########.fr       */
+/*   Created: 2015/10/11 20:59:38 by ggilaber          #+#    #+#             */
+/*   Updated: 2015/10/12 18:22:52 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>
+#include "ft_p.h"
 
-void *ft_memset(void *b, int c, size_t len)
+void	discuss(int sock)
 {
-	size_t				i;
-	long unsigned int	l;
+	char	line[250];
 
-	if (!b)
-		return (NULL);
-	i = 0;
-	l = 0;
-	while (i < 8)
-		l += c << (8 * i);
-	while (i < len / 8)
+	ft_init();
+	while (1)
 	{
-		*((long unsigned int*)b + i) = l;
-		i += 8;
+		SET_BLACK;
+		ft_prompt();
+		ft_get_cmd(line);
+		SET_WHITE;
+		ft_putstr_fd(line, sock);
+		handlecmd(line);
 	}
-	while (i < len)
-	{
-		((char*)b)[i] = c;
-		++i;
-	}
-	return (b);
 }

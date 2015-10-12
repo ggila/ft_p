@@ -1,38 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl.c                                       :+:      :+:    :+:   */
+/*   update_pos.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/03 22:01:48 by ggilaber          #+#    #+#             */
-/*   Updated: 2015/10/08 20:03:28 by ggilaber         ###   ########.fr       */
+/*   Created: 2015/08/21 15:03:15 by ggilaber          #+#    #+#             */
+/*   Updated: 2015/10/12 14:33:29 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include "sh1.h"
 
-int		ft_strlen(char const *str)
+void	ft_update_screen_insert_pos(int len)
 {
-	size_t n;
-
-	if (!str)
-		return (0);
-	n = 0;
-	while (str[n])
-		++n;
-	return (n);
-}
-
-void	ft_putstr_fd(const char *str, int fd)
-{
-	if (!str)
-		return ;
+	g_disp.pos++;
+	if (g_disp.pos % g_disp.size == 0)
+	{
+		g_disp.pos = 0;
+		g_disp.cur_line++;
+	}
+	if (len < g_disp.size - PROMPT_SIZE)
+		g_disp.nb_line = 1;
 	else
-		write(fd, str, ft_strlen(str));
-}
-
-void	ft_putstr(char const *str)
-{
-	ft_putstr_fd(str, 1);
+		g_disp.nb_line = (len - (g_disp.size - PROMPT_SIZE)) / g_disp.size + 2;
 }

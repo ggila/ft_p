@@ -25,20 +25,22 @@ NAME = serveur
 SRC = main.c\
 	  serverinit.c\
 	  serverloop.c\
+	  listenclient.c\
 	  printclient.c
 
 OBJ_DIR = obj
 OBJ = $(SRC:.c=.o)
 OBJ_PATH = $(addprefix $(OBJ_DIR)/, $(OBJ))
 
-INC = -I../
+INC = -I../\
+	  -I../libft/inc
 
 HEADER = $(addprefix $(inc), $(NAME).h)
 
 all : $(NAME)
 
 $(NAME) : $(OBJ_PATH)
-	@$(CC) $(FLAGS) -o $(NAME) $(OBJ_PATH) ../lib/lib.a
+	@$(CC) $(FLAGS) -o $(NAME) $(OBJ_PATH) ../libft/libft.a
 
 $(OBJ_DIR)/%.o : %.c
 	@echo "\t$(C_BLACK)gcc -f -c $^ -o .o$(C_DEFAULT)"

@@ -1,52 +1,49 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_p.h                                             :+:      :+:    :+:   */
+/*   sh1.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/10/07 18:09:19 by ggilaber          #+#    #+#             */
-/*   Updated: 2015/10/12 18:33:40 by ggilaber         ###   ########.fr       */
+/*   Created: 2015/08/21 09:49:41 by ggilaber          #+#    #+#             */
+/*   Updated: 2015/10/12 14:50:03 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_P_H
-# define FT_P_H
+#ifndef SH1_H
+# define SH1_H
 
 # include "libft.h"
-# include <stdlib.h>
 # include <unistd.h>
-# include <string.h>
-# include <sys/socket.h>
-# include <netdb.h>
-# include <netinet/in.h>
-# include <arpa/inet.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <termios.h>
 # include <term.h>
-
-# define OK 0
-# define KO -1
+# include <dirent.h>
+# include <sys/stat.h>
+# include <signal.h>
+# include <fcntl.h>
 
 # define SET_BLACK ft_putstr("\033[1;30m")
 # define SET_BLUE ft_putstr("\033[1;34m")
 # define SET_WHITE ft_putstr("\033[1;37m")
+
+# define OK 0
+# define KO 1
 
 # define UP 65
 # define DOWN 66
 # define RIGHT 67
 # define LEFT 68
 
-# define PROMPT_SIZE 15
+# define PATH 0
+# define DI 1
+# define FIL 2
 
-# define NB_CONNEX 10
+# define PROMPT_SIZE 15
 
 # define MASK 1U
 # define MASK_ENV_I MASK<<0
-
-typedef struct	s_client
-{
-	int			sock;
-	char		buf[250];
-}				t_client;
 
 typedef struct	s_screen
 {
@@ -74,20 +71,7 @@ t_screen		g_disp;
 
 
 
-t_client		g_client[NB_CONNEX + 1];
-int				g_max;
 
-//serveur
-void	quit(char *str);
-int		serverinit(int port);
-void	serverloop(int socket);
-void	listenclient(int sock, fd_set *all);
-void	printclient(void);
-
-//client
-int		clientinit(char *addr, int port);
-void	discuss(int sock);
-void	handlecmd(char *str);
 //main
 int		ft_putchar_tputs(int c);
 void	ft_tabcpy(char *line, char temp[], int cur);

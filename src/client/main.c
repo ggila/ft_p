@@ -6,7 +6,7 @@
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/07 18:03:55 by ggilaber          #+#    #+#             */
-/*   Updated: 2015/10/08 22:49:42 by ggilaber         ###   ########.fr       */
+/*   Updated: 2015/10/11 20:58:25 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int			main(int ac, char **av)
 	port = ft_atoi(av[2]);
 	if ((sock = clientinit(av[1], port)) == KO)
 		return (KO);
-	ft_putstr_fd("je suis un client\n", sock);
+	discuss(sock);
 	close(sock);
 	return (OK);
 }

@@ -23,24 +23,38 @@ FLAGS = -Wall -Werror -Wextra
 NAME = client
 
 SRC = main.c\
-	  clientinit.c
+	clientinit.c\
+	discuss.c\
+	handlecmd.c\
+	readline/main.c\
+	readline/readline.c\
+	readline/keymap.c\
+	readline/fleche.c\
+	readline/updatepos.c\
+	readline/lineinsert.c\
+	readline/screeninsert.c\
+	readline/linedel.c\
+	readline/movecur.c\
+	readline/quit.c\
+	readline/hist.c
 
 OBJ_DIR = obj
 OBJ = $(SRC:.c=.o)
 OBJ_PATH = $(addprefix $(OBJ_DIR)/, $(OBJ))
 
-INC = -I../
+INC = -I../\
+	  -I../libft/inc
 
 HEADER = $(addprefix $(inc), $(NAME).h)
 
 all : $(NAME)
 
 $(NAME) : $(OBJ_PATH)
-	@$(CC) $(FLAGS) -o $(NAME) $(OBJ_PATH) ../lib/lib.a
+	@$(CC) $(FLAGS) -o $(NAME) $(OBJ_PATH) ../libft/libft.a -ltermcap
 
 $(OBJ_DIR)/%.o : %.c
 	@echo "\t$(C_BLACK)gcc -f -c $^ -o .o$(C_DEFAULT)"
-	@mkdir -p obj/lib
+	@mkdir -p obj/readline
 	@$(CC) $(FLAGS) $(INC) -c $^ -o $@
 
 clean :

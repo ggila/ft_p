@@ -6,7 +6,7 @@
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/08 22:07:17 by ggilaber          #+#    #+#             */
-/*   Updated: 2015/10/10 22:48:57 by ggilaber         ###   ########.fr       */
+/*   Updated: 2015/10/11 20:25:30 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static void	printfd(void)
 	ft_putchar('}');
 	ft_putchar('\n');
 }
+
 void	printclient(void)
 {
 	printfd();

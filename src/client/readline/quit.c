@@ -1,37 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   quit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/03 13:53:00 by ggilaber          #+#    #+#             */
-/*   Updated: 2015/10/08 20:07:43 by ggilaber         ###   ########.fr       */
+/*   Created: 2015/08/22 08:26:49 by ggilaber          #+#    #+#             */
+/*   Updated: 2015/10/12 17:54:58 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-static int	myatoi(const char *str, int n)
+#include "sh1.h"
+
+void	ft_error(char *str)
 {
-	if (*str >= '0' && *str <= '9')
-	{
-		n = 10 * n + *str - '0';
-		str++;
-		return (myatoi(str, n));
-	}
-	else
-		return (n);
+	SET_WHITE;
+	ft_putendl(str);
+	ft_restore_term();
+	exit(1);
 }
 
-int			ft_atoi(const char *str)
+void	ft_restore_term(void)
 {
-	while (*str == ' ')
-		str++;
-	if (*str == '-')
-	{
-		str++;
-		return (-myatoi(str, 0));
-	}
-	if (*str == '+')
-		str++;
-	return (myatoi(str, 0));
+	char	*res;
+	char	*area;
+	char	buf[20];
+
+	area = buf;
+	res = tgetstr("ei", &area);
+	tputs(res, 1, ft_putchar_tputs);
+	tcsetattr(0, TCSANOW, &g_term_init);
+}
+
+void	ft_quit_ok(void)
+{
+	SET_WHITE;
+	ft_free_hist();
+	ft_restore_term();
+	exit(0);
 }

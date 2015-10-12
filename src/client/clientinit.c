@@ -6,7 +6,7 @@
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/07 18:12:03 by ggilaber          #+#    #+#             */
-/*   Updated: 2015/10/08 22:34:02 by ggilaber         ###   ########.fr       */
+/*   Updated: 2015/10/11 20:20:58 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,6 @@ int	clientinit(char *addr, int port)
 		return (ft_putstr("socket() error\n"), KO);
 	sininit(&sin, addr, port);
 	if (connect(sock, (const struct sockaddr *) &sin, sizeof(sin)) == -1)
-		return (ft_putstr("bind() error\n"), KO);
+		return (ft_putstr("connect() error\n"), KO);
 	return (sock);
 }

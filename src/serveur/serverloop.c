@@ -6,55 +6,73 @@
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/08 22:07:17 by ggilaber          #+#    #+#             */
-/*   Updated: 2015/10/10 23:55:13 by ggilaber         ###   ########.fr       */
+/*   Updated: 2015/10/11 20:56:34 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_p.h"
 
-/*void	serverloop(int sock)
+static int	addtoglobal(int csock)
+{
+	int	i;
+
+	i = 0;
+	while (g_client[i].sock)
+		i++;
+	if (i == NB_CONNEX)
+		return (KO);
+	g_client[i].sock = csock;
+	return (OK);
+}
+
+static void	newclient(int sock, fd_set *all)
 {
 	struct sockaddr_in	client_sin;
 	unsigned int		cs_len;
 	int					client_sock;
-	int					r;
-	char				buf[25];
 
-	client_sock = accept(sock, (struct sockaddr*)&client_sin, &cs_len);
-	r = read(client_sock, buf, 25);
-	buf[r] = '\0';
-	ft_putstr(buf);
-	close(client_sock);
+	cs_len = sizeof(struct sockaddr);
+	if ((client_sock = accept(sock, (struct sockaddr*)&client_sin, &cs_len))
+			== -1)
+	{
+		ft_putstr("accept() failed\n");
+		return ;
+	}
+	if (addtoglobal(client_sock) == KO)
+	{
+		ft_putstr("too much client right now\n");
+		return ;
+	}
+	if (client_sock > g_max)
+		g_max = client_sock;
+	FD_SET(client_sock, all);
+	return ;
 }
-*/
-static void	addsocks(fd_set *fds, int sock)
+
+static void	checkclient(fd_set *fds, fd_set *all)
 {
 	int	i;
 
 	i = -1;
 	while (g_client[++i].sock)
-		FD_SET(g_client[i].sock, fds);
-	FD_SET(sock, fds);
+		if (FD_ISSET(g_client[i].sock, fds))
+			listenclient(g_client[i].sock, all);
 }
 
 void		serverloop(int sock)
 {
 	fd_set 	fds;
-	int i;
+	fd_set 	all;
 
+	FD_ZERO(&all);
+	FD_SET(sock, &all);
 	while (1)
 	{
-		FD_ZERO(&fds);
-		addsocks(&fds, sock);
-		if ((i = select(g_max + 1, &fds, NULL, NULL, NULL)) == -1)
+		FD_COPY(&all, &fds);
+		if (select(g_max + 1, &fds, NULL, NULL, NULL) == -1)
 			quit("select() error");
-		while (i)
-		{
-			ft_putnbr(((int*)(&fds))[i]);
-			ft_putchar('\t');
-		}
-//		if (FD_ISSET(sock, fdset))
-//			acceptclient();
-//		check_fdset()  // pour chaque client, verifie si il parle ()
+		if (FD_ISSET(sock, &fds))
+			newclient(sock, &all);
+		checkclient(&fds, &all);
 	}
 }

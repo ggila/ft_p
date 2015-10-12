@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putchar_fd.c                                    :+:      :+:    :+:   */
+/*   handlecmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/03 20:49:51 by ggilaber          #+#    #+#             */
-/*   Updated: 2014/11/05 09:59:28 by ggilaber         ###   ########.fr       */
+/*   Created: 2015/10/12 18:23:07 by ggilaber          #+#    #+#             */
+/*   Updated: 2015/10/12 18:30:59 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
+#include "ft_p.h"
 
-void	ft_putchar_fd(char const c, int fd)
+void	handlecmd(char *cmd)
 {
-	write(fd, &c, 1);
+	if (ft_strequ(cmd, "exit"))
+		ft_quit_ok();
 }

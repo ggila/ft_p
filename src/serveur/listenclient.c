@@ -1,35 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
+/*   listenclient.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2014/11/04 17:22:23 by ggilaber          #+#    #+#             */
-/*   Updated: 2015/10/10 23:22:40 by ggilaber         ###   ########.fr       */
+/*   Created: 2015/10/11 15:58:37 by ggilaber          #+#    #+#             */
+/*   Updated: 2015/10/12 19:32:36 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	ft_putstr_fd(char *str, int fd);
-void	ft_putchar_fd(char c, int fd);
+#include "ft_p.h"
 
-void	ft_putnbr_fd(int n, int fd)
+void	listenclient(int sock, fd_set *all)
 {
-	if (n < 0)
-	{
-		if (n == -2147483648)
-		{
-			ft_putstr_fd("-2147483648", fd);
-			return ;
-		}
-		ft_putchar_fd('-', fd);
-		n *= -1;
-	}
-	if (n > 9)
-	{
-		ft_putnbr_fd(n / 10, fd);
-		ft_putchar_fd('0' + (n % 10), fd);
-	}
-	else
-		ft_putchar_fd('0' + n, fd);
+	char	b[30];
+	int r;
+
+	(void)all;
+	r=read(sock, b, 30);
+	b[r] = 0;
+	ft_putstr(b);
+	ft_putstr("\n");
+	if (ft_strequ(b, "exit"))
+		dropclient(sock);
 }
