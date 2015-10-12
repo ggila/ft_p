@@ -6,7 +6,11 @@
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/07 18:09:19 by ggilaber          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2015/10/12 18:33:40 by ggilaber         ###   ########.fr       */
+=======
+/*   Updated: 2015/10/11 20:59:26 by ggilaber         ###   ########.fr       */
+>>>>>>> 992ced860c730542c8863ea01b59b00ed5ffcfe7
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +91,7 @@ void	printclient(void);
 //client
 int		clientinit(char *addr, int port);
 void	discuss(int sock);
+<<<<<<< HEAD
 void	handlecmd(char *str);
 //main
 int		ft_putchar_tputs(int c);
@@ -125,5 +130,17 @@ void	ft_go_downleft(void);
 void	ft_error(char *str);
 void	ft_quit_ok(void);
 void	ft_restore_term(void);
+=======
+
+//lib
+void	ft_putnbr(int n);
+void	ft_putnbr_fd(int n, int fd);
+void	ft_putstr_fd(const char *str, int fd);
+void	ft_putchar(char c);
+void	ft_putchar_fd(char c);
+void	ft_putstr(char *str);
+int		ft_atoi(char *str);
+void	ft_memset(void *b, char c, size_t len);
+>>>>>>> 992ced860c730542c8863ea01b59b00ed5ffcfe7
 
 #endif
