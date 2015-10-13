@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   listenclient.c                                     :+:      :+:    :+:   */
+/*   ft_strclr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/10/11 15:58:37 by ggilaber          #+#    #+#             */
-/*   Updated: 2015/10/13 11:25:29 by ggilaber         ###   ########.fr       */
+/*   Created: 2014/11/08 20:04:10 by ggilaber          #+#    #+#             */
+/*   Updated: 2015/10/12 16:43:06 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_p.h"
-
-void	listenclient(int sock, fd_set *all)
+void	ft_strclr(char *s)
 {
-	char	b[30];
-	int r;
-
-	(void)all;
-	r=read(sock, b, 30);
-	b[r] = 0;
-	ft_putstr(b);
-	ft_putstr("\n");
-	if (ft_strequ(b, "exit"))
-		dropclient(sock, all);
+	if (!s)
+		return ;
+	while (*s)
+	{
+		*s = '\0';
+		s++;
+	}
+	return ;
 }

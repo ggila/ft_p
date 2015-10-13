@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   listenclient.c                                     :+:      :+:    :+:   */
+/*   ft_memchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/10/11 15:58:37 by ggilaber          #+#    #+#             */
-/*   Updated: 2015/10/13 11:25:29 by ggilaber         ###   ########.fr       */
+/*   Created: 2014/11/08 00:38:49 by ggilaber          #+#    #+#             */
+/*   Updated: 2015/10/12 16:39:01 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_p.h"
+#include <string.h>
 
-void	listenclient(int sock, fd_set *all)
+void	*ft_memchr(const void *s, int c, size_t n)
 {
-	char	b[30];
-	int r;
+	size_t i;
 
-	(void)all;
-	r=read(sock, b, 30);
-	b[r] = 0;
-	ft_putstr(b);
-	ft_putstr("\n");
-	if (ft_strequ(b, "exit"))
-		dropclient(sock, all);
+	if (!s)
+		return (NULL);
+	i = -1;
+	while (++i < n)
+	{
+		if (((unsigned char*)s)[i] == (unsigned char)c)
+			return (&(((unsigned char*)s)[i]));
+	}
+	return (NULL);
 }

@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   listenclient.c                                     :+:      :+:    :+:   */
+/*   ft_strncpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/10/11 15:58:37 by ggilaber          #+#    #+#             */
-/*   Updated: 2015/10/13 11:25:29 by ggilaber         ###   ########.fr       */
+/*   Created: 2014/11/05 12:57:12 by ggilaber          #+#    #+#             */
+/*   Updated: 2014/11/09 23:42:34 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_p.h"
+#include <string.h>
 
-void	listenclient(int sock, fd_set *all)
+char	*ft_strncpy(char *dst, const char *src, size_t n)
 {
-	char	b[30];
-	int r;
+	size_t i;
 
-	(void)all;
-	r=read(sock, b, 30);
-	b[r] = 0;
-	ft_putstr(b);
-	ft_putstr("\n");
-	if (ft_strequ(b, "exit"))
-		dropclient(sock, all);
+	if (!dst || !src)
+		return (NULL);
+	i = 0;
+	while (src[i] && i < n)
+	{
+		dst[i] = src[i];
+		i++;
+	}
+	while (i < n)
+		dst[i++] = '\0';
+	return (dst);
 }

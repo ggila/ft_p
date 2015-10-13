@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   listenclient.c                                     :+:      :+:    :+:   */
+/*   ft_memccpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/10/11 15:58:37 by ggilaber          #+#    #+#             */
-/*   Updated: 2015/10/13 11:25:29 by ggilaber         ###   ########.fr       */
+/*   Created: 2014/11/08 00:18:41 by ggilaber          #+#    #+#             */
+/*   Updated: 2015/10/12 16:38:57 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_p.h"
+#include <string.h>
 
-void	listenclient(int sock, fd_set *all)
+void	*ft_memccpy(void *dst, const void *src, int c, size_t n)
 {
-	char	b[30];
-	int r;
+	size_t i;
 
-	(void)all;
-	r=read(sock, b, 30);
-	b[r] = 0;
-	ft_putstr(b);
-	ft_putstr("\n");
-	if (ft_strequ(b, "exit"))
-		dropclient(sock, all);
+	if (!src || !dst)
+		return (NULL);
+	i = 0;
+	while (i < n)
+	{
+		((unsigned char*)dst)[i] = ((unsigned char*)src)[i];
+		if (((unsigned char*)src)[i] == c)
+			return ((void*)(&(((unsigned char*)dst)[i + 1])));
+		++i;
+	}
+	return (NULL);
 }

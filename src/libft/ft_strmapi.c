@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   listenclient.c                                     :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/10/11 15:58:37 by ggilaber          #+#    #+#             */
-/*   Updated: 2015/10/13 11:25:29 by ggilaber         ###   ########.fr       */
+/*   Created: 2014/11/06 20:03:39 by ggilaber          #+#    #+#             */
+/*   Updated: 2015/10/12 16:45:25 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_p.h"
+#include "libft.h"
 
-void	listenclient(int sock, fd_set *all)
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	char	b[30];
-	int r;
+	char			*str;
+	unsigned int	i;
 
-	(void)all;
-	r=read(sock, b, 30);
-	b[r] = 0;
-	ft_putstr(b);
-	ft_putstr("\n");
-	if (ft_strequ(b, "exit"))
-		dropclient(sock, all);
+	if (!s || !f)
+		return (NULL);
+	if (!(str = ft_strdup(s)))
+		return (NULL);
+	i = -1;
+	while (str[++i])
+		str[i] = f(i, str[i]);
+	return (str);
 }

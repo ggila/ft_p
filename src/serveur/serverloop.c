@@ -6,12 +6,12 @@
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/08 22:07:17 by ggilaber          #+#    #+#             */
-/*   Updated: 2015/10/11 20:56:34 by ggilaber         ###   ########.fr       */
+/*   Updated: 2015/10/13 17:34:45 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_p.h"
-
+//NB_CONNEX ne sert pas a ce que je pensais at first
 static int	addtoglobal(int csock)
 {
 	int	i;
@@ -19,8 +19,8 @@ static int	addtoglobal(int csock)
 	i = 0;
 	while (g_client[i].sock)
 		i++;
-	if (i == NB_CONNEX)
-		return (KO);
+//	if (i == NB_CONNEX)
+//		return (KO);
 	g_client[i].sock = csock;
 	return (OK);
 }
@@ -46,6 +46,7 @@ static void	newclient(int sock, fd_set *all)
 	if (client_sock > g_max)
 		g_max = client_sock;
 	FD_SET(client_sock, all);
+	printclient();
 	return ;
 }
 

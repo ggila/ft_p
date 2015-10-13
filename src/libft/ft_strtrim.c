@@ -1,27 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   listenclient.c                                     :+:      :+:    :+:   */
+/*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/10/11 15:58:37 by ggilaber          #+#    #+#             */
-/*   Updated: 2015/10/13 11:25:29 by ggilaber         ###   ########.fr       */
+/*   Created: 2014/11/06 23:27:46 by ggilaber          #+#    #+#             */
+/*   Updated: 2014/11/09 18:06:57 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_p.h"
+#include "libft.h"
 
-void	listenclient(int sock, fd_set *all)
+static int	ft_ispace(char c)
 {
-	char	b[30];
-	int r;
+	return (c == ' ' || c == '\n' || c == '\t');
+}
 
-	(void)all;
-	r=read(sock, b, 30);
-	b[r] = 0;
-	ft_putstr(b);
-	ft_putstr("\n");
-	if (ft_strequ(b, "exit"))
-		dropclient(sock, all);
+char		*ft_strtrim(char const *s)
+{
+	size_t	len;
+
+	if (!s)
+		return (NULL);
+	while (s && ft_ispace(*s))
+		s++;
+	len = ft_strlen(s);
+	if (len)
+	{
+		while (ft_isspace(s[len - 1]))
+			len--;
+	}
+	return (ft_strsub(s, 0, len));
 }

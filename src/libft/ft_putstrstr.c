@@ -1,27 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   listenclient.c                                     :+:      :+:    :+:   */
+/*   ft_putstrstr.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/10/11 15:58:37 by ggilaber          #+#    #+#             */
-/*   Updated: 2015/10/13 11:25:29 by ggilaber         ###   ########.fr       */
+/*   Created: 2014/12/02 17:00:26 by ggilaber          #+#    #+#             */
+/*   Updated: 2015/10/12 16:42:10 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_p.h"
+#include <unistd.h>
+#include "libft.h"
 
-void	listenclient(int sock, fd_set *all)
+/*
+** print a char** which ends by NULL
+*/
+
+void	ft_putstrstr(char **str)
 {
-	char	b[30];
-	int r;
-
-	(void)all;
-	r=read(sock, b, 30);
-	b[r] = 0;
-	ft_putstr(b);
-	ft_putstr("\n");
-	if (ft_strequ(b, "exit"))
-		dropclient(sock, all);
+	if (!str)
+		return ;
+	while (*str)
+	{
+		ft_putendl(*str);
+		str++;
+	}
 }

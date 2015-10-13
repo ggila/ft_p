@@ -1,27 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   listenclient.c                                     :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/10/11 15:58:37 by ggilaber          #+#    #+#             */
-/*   Updated: 2015/10/13 11:25:29 by ggilaber         ###   ########.fr       */
+/*   Created: 2014/11/03 13:53:00 by ggilaber          #+#    #+#             */
+/*   Updated: 2014/11/06 09:13:57 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_p.h"
+#include "libft.h"
 
-void	listenclient(int sock, fd_set *all)
+static int	myatoi(const char *str, int n)
 {
-	char	b[30];
-	int r;
+	if (*str >= '0' && *str <= '9')
+	{
+		n = 10 * n + *str - '0';
+		str++;
+		return (myatoi(str, n));
+	}
+	else
+		return (n);
+}
 
-	(void)all;
-	r=read(sock, b, 30);
-	b[r] = 0;
-	ft_putstr(b);
-	ft_putstr("\n");
-	if (ft_strequ(b, "exit"))
-		dropclient(sock, all);
+int			ft_atoi(const char *str)
+{
+	while (ft_isspace(*str))
+		str++;
+	if (*str == '-')
+	{
+		str++;
+		return (-myatoi(str, 0));
+	}
+	if (*str == '+')
+		str++;
+	return (myatoi(str, 0));
 }

@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   listenclient.c                                     :+:      :+:    :+:   */
+/*   ft_strsub.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/10/11 15:58:37 by ggilaber          #+#    #+#             */
-/*   Updated: 2015/10/13 11:25:29 by ggilaber         ###   ########.fr       */
+/*   Created: 2014/11/06 21:54:38 by ggilaber          #+#    #+#             */
+/*   Updated: 2015/10/12 16:46:45 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_p.h"
+#include "libft.h"
+#include <stdlib.h>
 
-void	listenclient(int sock, fd_set *all)
+char	*ft_strsub(char const *s, unsigned int start, size_t len)
 {
-	char	b[30];
-	int r;
+	char *str;
 
-	(void)all;
-	r=read(sock, b, 30);
-	b[r] = 0;
-	ft_putstr(b);
-	ft_putstr("\n");
-	if (ft_strequ(b, "exit"))
-		dropclient(sock, all);
+	if (!s)
+		return (NULL);
+	if (!(str = (char*)malloc(sizeof(char) * (len + 1))))
+		return (NULL);
+	ft_strncpy(str, s + start, len);
+	str[len] = '\0';
+	return (str);
 }

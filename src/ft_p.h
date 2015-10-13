@@ -6,11 +6,7 @@
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/07 18:09:19 by ggilaber          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2015/10/12 18:33:40 by ggilaber         ###   ########.fr       */
-=======
-/*   Updated: 2015/10/11 20:59:26 by ggilaber         ###   ########.fr       */
->>>>>>> 992ced860c730542c8863ea01b59b00ed5ffcfe7
+/*   Updated: 2015/10/13 11:40:19 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +37,7 @@
 
 # define PROMPT_SIZE 15
 
-# define NB_CONNEX 10
+# define NB_CONNEX 3
 
 # define MASK 1U
 # define MASK_ENV_I MASK<<0
@@ -78,7 +74,7 @@ t_screen		g_disp;
 
 
 
-t_client		g_client[NB_CONNEX + 1];
+t_client		g_client[NB_CONNEX + 2];
 int				g_max;
 
 //serveur
@@ -87,12 +83,16 @@ int		serverinit(int port);
 void	serverloop(int socket);
 void	listenclient(int sock, fd_set *all);
 void	printclient(void);
+void	dropclient(int sock, fd_set *all);
 
 //client
 int		clientinit(char *addr, int port);
 void	discuss(int sock);
-<<<<<<< HEAD
 void	handlecmd(char *str);
+
+
+
+//readline
 //main
 int		ft_putchar_tputs(int c);
 void	ft_tabcpy(char *line, char temp[], int cur);
@@ -130,17 +130,5 @@ void	ft_go_downleft(void);
 void	ft_error(char *str);
 void	ft_quit_ok(void);
 void	ft_restore_term(void);
-=======
-
-//lib
-void	ft_putnbr(int n);
-void	ft_putnbr_fd(int n, int fd);
-void	ft_putstr_fd(const char *str, int fd);
-void	ft_putchar(char c);
-void	ft_putchar_fd(char c);
-void	ft_putstr(char *str);
-int		ft_atoi(char *str);
-void	ft_memset(void *b, char c, size_t len);
->>>>>>> 992ced860c730542c8863ea01b59b00ed5ffcfe7
 
 #endif
