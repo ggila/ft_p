@@ -6,7 +6,7 @@
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/07 18:09:19 by ggilaber          #+#    #+#             */
-/*   Updated: 2015/10/13 11:40:19 by ggilaber         ###   ########.fr       */
+/*   Updated: 2016/01/12 18:51:23 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <netinet/in.h>
 # include <arpa/inet.h>
 # include <term.h>
+# include <signal.h>
 
 # define OK 0
 # define KO -1
