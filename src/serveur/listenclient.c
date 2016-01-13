@@ -6,7 +6,7 @@
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/11 15:58:37 by ggilaber          #+#    #+#             */
-/*   Updated: 2016/01/13 17:34:55 by ggilaber         ###   ########.fr       */
+/*   Updated: 2016/01/13 18:30:31 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,9 @@ static char	checkpath(char request[250], char buf[350], int sock)
 	buf[0] = '\0';
 	ft_strcat(buf, getcwd(cwd, 100));
 	ft_strcat(buf, "/basedir/");
-	ft_strcat(buf, request);
+	if (ft_strequ(request, "cd"))
+		return (OK);
+	ft_strcat(buf, request + 3);
 	if ((stat(buf, &buf_stat) == -1)
 			|| (!S_ISDIR(buf_stat.st_mode)))
 	{
@@ -62,9 +64,9 @@ static void	handle_request(char request[250], int sock, fd_set *all)
 		dropclient(sock, all);
 	else if (ft_strequ(request, "pwd"))
 		sendpwd(sock);
-	else if (ft_strnequ(request, "cd ", 3))
+	else if (ft_strnequ(request, "cd ", 3) || ft_strequ(request, "cd"))
 	{
-		if (checkpath(request + 3, buf, sock) == OK)
+		if (checkpath(request, buf, sock) == OK)
 			netcd(sock, buf);
 	}
 	else if (ft_strnequ(request, "ls", 2))

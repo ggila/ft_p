@@ -6,7 +6,7 @@
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/11 20:59:38 by ggilaber          #+#    #+#             */
-/*   Updated: 2016/01/13 18:16:55 by ggilaber         ###   ########.fr       */
+/*   Updated: 2016/01/13 18:55:48 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,18 @@ void	checkstatus(int sock)
 	}
 }
 
-static void	listenserver(int sock)
+static void	cdnet_client(char *b, char *netpwd)
+{
+	char buf[250];
+
+	netpwd[0] = 0;
+	ft_strcat(netpwd, ft_strstr(b, getcwd(buf, 250)));
+}
+
+static void	listenserver(char *netpwd, char *request, int sock)
 {
 	char	b[250];
-	int r;
+	int		r;
 
 	checkstatus(sock);
 	if ((r = read(sock, b, 250)) == -1)
@@ -47,7 +55,10 @@ static void	listenserver(int sock)
 		exit(0);
 	}
 	b[r] = 0;
-	ft_putstr(b);
+	if (ft_strnequ(request, "cd ", 3) || ft_strequ(request, "cd"))
+		cdnet_client(b, netpwd);
+	else
+		ft_putstr(b);
 	ft_putstr("\n");
 	SET_WHITE;
 }
@@ -84,7 +95,7 @@ void		discuss(int sock)
 		else
 		{
 			ft_putstr_fd(request, sock);
-			listenserver(sock);
+			listenserver(netpwd, request, sock);
 		}
 		ft_putendl("");
 		free(request);
