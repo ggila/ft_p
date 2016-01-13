@@ -63,41 +63,70 @@ static void	listenserver(char *netpwd, char *request, int sock)
 	SET_WHITE;
 }
 
-static char	localcommand(char *cmd)
+static void	handle_network(char )
 {
-	if (ft_strequ(cmd, "exit"))
-		return (OK);
-	else if (ft_strnequ(cmd, "lcd ", 4) || ft_strequ(cmd, "lcd"))
-		return (OK);
-	else if (ft_strequ(cmd, "lpwd"))
-		return (OK);
-	else if (ft_strnequ(cmd, "lls ", 4) || ft_strequ(cmd, "lls"))
-		return (OK);
+	ft_putstr_fd(request, sock);
+	listenserver(netpwd, request, sock);
+}
+
+static char	is_network_cmd(char *prog)
+{
+	if (ft_strequ(prog, "quit"))
+		return (QUIT);
+	else if (ft_strequ(prog, "pwd"))
+		return (PWD);
+	else if (ft_strequ(prog, "ls"))
+		return (LS);
+	else if (ft_strequ(prog, "cd"))
+		return (CD);
+	else if (ft_strequ(prog, "get"))
+		return (GET);
+	else if (ft_strequ(prog, "put"))
+		return (PUT);
+	return (0);
+}
+
+static char	is_local_cmd(char *prog)
+{
+	if (ft_strequ(prog, "lcd"))
+		return (LCD);
+	else if (ft_strequ(prog, "lpwd"))
+		return (LPWD);
+	else if (ft_strequ(prog, "lls"))
+		return (LLS);
 	return (KO);
+}
+
+static char	**get_client_request(char netpwd[250])
+{
+	char	line[250];
+	char	*l;
+	char	**request;
+
+	ft_prompt(netpwd);
+	SET_BLACK;
+	ft_get_cmd(line);
+	SET_WHITE;
+	l = ft_strtrim(line);
+	request = ft_strsplit(l, ' ');
+	free(request);
+	return (request);
 }
 
 void		discuss(int sock)
 {
-	char	line[250];
-	char	*request;
+	char	**request;
 	char	netpwd[250];
+	int		index;
 
 	ft_init(netpwd);
 	while (1)
 	{
-		SET_BLACK;
-		ft_prompt(netpwd);
-		ft_get_cmd(line);
-		SET_WHITE;
-		request = ft_strtrim(line);
-		if (localcommand(request) == OK)
-			handlecmd(request);
-		else
-		{
-			ft_putstr_fd(request, sock);
-			listenserver(netpwd, request, sock);
-		}
-		ft_putendl("");
+		request = get_client_request();
+		if ((index = is_local_cmd(request[0])))
+			local[index](request);
+		else if ((index = is_network_cmd(request[0])))
+			network[index](sock, request);
 		free(request);
 	}
 }
