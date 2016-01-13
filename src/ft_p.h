@@ -6,7 +6,7 @@
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/07 18:09:19 by ggilaber          #+#    #+#             */
-/*   Updated: 2016/01/12 18:51:23 by ggilaber         ###   ########.fr       */
+/*   Updated: 2016/01/13 14:31:38 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <unistd.h>
 # include <string.h>
 # include <sys/socket.h>
+# include <sys/stat.h>
 # include <netdb.h>
 # include <netinet/in.h>
 # include <arpa/inet.h>
@@ -28,8 +29,10 @@
 # define KO -1
 
 # define SET_BLACK ft_putstr("\033[1;30m")
-# define SET_BLUE ft_putstr("\033[1;34m")
 # define SET_WHITE ft_putstr("\033[1;37m")
+# define SET_BLUE ft_putstr("\033[1;34m")
+# define SET_YELLOW ft_putstr("\033[1;33m")
+# define SET_RED ft_putstr("\033[1;31m")
 
 # define UP 65
 # define DOWN 66
@@ -46,7 +49,7 @@
 typedef struct	s_client
 {
 	int			sock;
-	char		buf[250];
+	char		netpwd[200];
 }				t_client;
 
 typedef struct	s_screen
@@ -90,6 +93,7 @@ void	dropclient(int sock, fd_set *all);
 int		clientinit(char *addr, int port);
 void	discuss(int sock);
 void	handlecmd(char *str);
+void	send_client(int sock, char *str, char success);
 
 
 
@@ -97,15 +101,15 @@ void	handlecmd(char *str);
 //main
 int		ft_putchar_tputs(int c);
 void	ft_tabcpy(char *line, char temp[], int cur);
-void	ft_prompt(void);
+void	ft_prompt(char *netpwd);
 void	ft_edit_init(int *cur);
 void	ft_lineclr(char *line);
 void	ft_init_term(void);
 void	ft_init_hist(void);
 void	ft_init_screen(void);
-void	ft_init(void);
+void	ft_init(char *netpwd);
 //ft_get_cmd.c
-void			ft_get_cmd(char line[]);
+void	ft_get_cmd(char line[]);
 //key_map.c
 int		ft_is_map(char c);
 void	ft_map(char *buf, int *cur, char *line);

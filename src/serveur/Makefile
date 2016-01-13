@@ -27,7 +27,8 @@ SRC = main.c\
 	  serverloop.c\
 	  listenclient.c\
 	  printclient.c\
-	  dropclient.c
+	  dropclient.c\
+	  send_client.c
 
 OBJ_DIR = obj
 OBJ = $(SRC:.c=.o)

@@ -6,7 +6,7 @@
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/08 22:07:17 by ggilaber          #+#    #+#             */
-/*   Updated: 2015/10/13 17:34:45 by ggilaber         ###   ########.fr       */
+/*   Updated: 2016/01/13 14:44:54 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ static int	addtoglobal(int csock)
 //	if (i == NB_CONNEX)
 //		return (KO);
 	g_client[i].sock = csock;
+	g_client[i].netpwd[0] = '/';
+	g_client[i].netpwd[1] = '\0';
 	return (OK);
 }
 

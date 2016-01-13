@@ -6,7 +6,7 @@
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/08/21 09:49:41 by ggilaber          #+#    #+#             */
-/*   Updated: 2015/10/12 14:50:03 by ggilaber         ###   ########.fr       */
+/*   Updated: 2016/01/13 11:41:59 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # define SET_BLACK ft_putstr("\033[1;30m")
 # define SET_BLUE ft_putstr("\033[1;34m")
 # define SET_WHITE ft_putstr("\033[1;37m")
+# define SET_YELLOW ft_putstr("\033[1;33m")
 
 # define OK 0
 # define KO 1
@@ -75,13 +76,13 @@ t_screen		g_disp;
 //main
 int		ft_putchar_tputs(int c);
 void	ft_tabcpy(char *line, char temp[], int cur);
-void	ft_prompt(void);
+void	ft_prompt(char *netpwd);
 void	ft_edit_init(int *cur);
 void	ft_lineclr(char *line);
 void	ft_init_term(void);
 void	ft_init_hist(void);
 void	ft_init_screen(void);
-void	ft_init(void);
+void	ft_init(char netpwd[250]);
 //ft_get_cmd.c
 void			ft_get_cmd(char line[]);
 //key_map.c

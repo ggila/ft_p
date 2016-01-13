@@ -6,24 +6,87 @@
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/11 20:59:38 by ggilaber          #+#    #+#             */
-/*   Updated: 2015/10/12 18:22:52 by ggilaber         ###   ########.fr       */
+/*   Updated: 2016/01/13 18:16:55 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_p.h"
 
-void	discuss(int sock)
+void	checkstatus(int sock)
+{
+	char	b;
+	int		r;
+
+	if ((r = read(sock, &b, 1)) == -1)
+	{
+		ft_putstr("read() failed()");
+		exit(0);
+	}
+	if (b == OK)
+	{
+		SET_YELLOW;
+		ft_putstr("OK\n");
+		SET_WHITE;
+	}
+	else
+	{
+		SET_RED;
+		ft_putstr("KO: ");
+	}
+}
+
+static void	listenserver(int sock)
+{
+	char	b[250];
+	int r;
+
+	checkstatus(sock);
+	if ((r = read(sock, b, 250)) == -1)
+	{
+		ft_putendl("read() failed()");
+		exit(0);
+	}
+	b[r] = 0;
+	ft_putstr(b);
+	ft_putstr("\n");
+	SET_WHITE;
+}
+
+static char	localcommand(char *cmd)
+{
+	if (ft_strequ(cmd, "exit"))
+		return (OK);
+	else if (ft_strnequ(cmd, "lcd ", 4) || ft_strequ(cmd, "lcd"))
+		return (OK);
+	else if (ft_strequ(cmd, "lpwd"))
+		return (OK);
+	else if (ft_strnequ(cmd, "lls ", 4) || ft_strequ(cmd, "lls"))
+		return (OK);
+	return (KO);
+}
+
+void		discuss(int sock)
 {
 	char	line[250];
+	char	*request;
+	char	netpwd[250];
 
-	ft_init();
+	ft_init(netpwd);
 	while (1)
 	{
 		SET_BLACK;
-		ft_prompt();
+		ft_prompt(netpwd);
 		ft_get_cmd(line);
 		SET_WHITE;
-		ft_putstr_fd(line, sock);
-		handlecmd(line);
+		request = ft_strtrim(line);
+		if (localcommand(request) == OK)
+			handlecmd(request);
+		else
+		{
+			ft_putstr_fd(request, sock);
+			listenserver(sock);
+		}
+		ft_putendl("");
+		free(request);
 	}
 }

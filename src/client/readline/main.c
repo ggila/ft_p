@@ -6,7 +6,7 @@
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/08/21 09:49:35 by ggilaber          #+#    #+#             */
-/*   Updated: 2015/10/12 17:59:41 by ggilaber         ###   ########.fr       */
+/*   Updated: 2016/01/13 14:44:18 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,20 @@ int		ft_putchar_tputs(int c)
 	return (1);
 }
 
-void	ft_prompt(void)
+void	ft_prompt(char *netpwd)
 {
 	char	buf[1000];
 
-	ft_putstr(" -------> in ");
+	ft_putstr(" \\------> loc: ");
 	SET_BLUE;
 	getcwd(buf, 1000);
-	ft_putstr(buf);
+	ft_putendl(buf);
 	SET_BLACK;
-	ft_putstr("\n     \\\\------> ");
+	ft_putstr("   \\----> net: ");
+	SET_YELLOW;
+	ft_putendl(netpwd);
+	SET_BLACK;
+	ft_putstr("     \\-------> ");
 }
 
 void	ft_lineclr(char *line)
@@ -96,10 +100,12 @@ void	ft_init_screen(void)
 	g_disp.pos = 0;
 }
 
-void		ft_init(void)
+void		ft_init(char netpwd[250])
 {
 	struct sigaction	sig;
 
+	netpwd[0] = '/';
+	netpwd[1] = '\0';
 	ft_init_term();
 	ft_init_hist();
 	ft_init_screen();

@@ -6,11 +6,11 @@
 #    By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/10/08 19:45:49 by ggilaber          #+#    #+#              #
-#    Updated: 2015/10/12 16:55:56 by ggilaber         ###   ########.fr        #
+#    Updated: 2016/01/13 13:01:18 by ggilaber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-.PHONY : clean fclean re all
+.PHONY : clean fclean re all serveur client
 
 all: serveur client
 

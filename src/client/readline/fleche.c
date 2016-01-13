@@ -6,7 +6,7 @@
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/08/21 09:35:35 by ggilaber          #+#    #+#             */
-/*   Updated: 2016/01/12 18:04:24 by ggilaber         ###   ########.fr       */
+/*   Updated: 2016/01/13 16:56:26 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static void	ft_del_current(int *cur)
 	}
 	tputs(tgetstr("dl", &area), 1, ft_putchar_tputs);
 	tputs(tgetstr("cr", &area), 1, ft_putchar_tputs);
-	ft_putstr("     \\\\------> ");
+	ft_putstr("     \\-------> ");
 	ft_edit_init(cur);
 }
 
