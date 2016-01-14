@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_p.h"
-//NB_CONNEX ne sert pas a ce que je pensais at first
+
 static int	addtoglobal(int csock)
 {
 	int	i;
@@ -19,8 +19,8 @@ static int	addtoglobal(int csock)
 	i = 0;
 	while (g_client[i].sock)
 		i++;
-//	if (i == NB_CONNEX)
-//		return (KO);
+	if (i == NB_CONNEX)
+		return (KO);
 	g_client[i].sock = csock;
 	g_client[i].netpwd[0] = '/';
 	g_client[i].netpwd[1] = '\0';
@@ -71,6 +71,7 @@ void		serverloop(int sock)
 	FD_SET(sock, &all);
 	while (1)
 	{
+		FD_ZERO(&fds);
 		FD_COPY(&all, &fds);
 		if (select(g_max + 1, &fds, NULL, NULL, NULL) == -1)
 			quit("select() error");

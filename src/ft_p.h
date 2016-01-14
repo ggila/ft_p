@@ -52,7 +52,7 @@
 
 # define PROMPT_SIZE 15
 
-# define NB_CONNEX 3
+# define NB_CONNEX 10
 
 # define MASK 1U
 # define MASK_ENV_I MASK<<0
