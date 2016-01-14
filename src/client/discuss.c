@@ -6,67 +6,21 @@
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/11 20:59:38 by ggilaber          #+#    #+#             */
-/*   Updated: 2016/01/13 18:55:48 by ggilaber         ###   ########.fr       */
+/*   Updated: 2016/01/14 11:56:34 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_p.h"
 
-void	checkstatus(int sock)
+static char	is_local_cmd(char *prog)
 {
-	char	b;
-	int		r;
-
-	if ((r = read(sock, &b, 1)) == -1)
-	{
-		ft_putstr("read() failed()");
-		exit(0);
-	}
-	if (b == OK)
-	{
-		SET_YELLOW;
-		ft_putstr("OK\n");
-		SET_WHITE;
-	}
-	else
-	{
-		SET_RED;
-		ft_putstr("KO: ");
-	}
-}
-
-static void	cdnet_client(char *b, char *netpwd)
-{
-	char buf[250];
-
-	netpwd[0] = 0;
-	ft_strcat(netpwd, ft_strstr(b, getcwd(buf, 250)));
-}
-
-static void	listenserver(char *netpwd, char *request, int sock)
-{
-	char	b[250];
-	int		r;
-
-	checkstatus(sock);
-	if ((r = read(sock, b, 250)) == -1)
-	{
-		ft_putendl("read() failed()");
-		exit(0);
-	}
-	b[r] = 0;
-	if (ft_strnequ(request, "cd ", 3) || ft_strequ(request, "cd"))
-		cdnet_client(b, netpwd);
-	else
-		ft_putstr(b);
-	ft_putstr("\n");
-	SET_WHITE;
-}
-
-static void	handle_network(char )
-{
-	ft_putstr_fd(request, sock);
-	listenserver(netpwd, request, sock);
+	if (ft_strequ(prog, "lcd"))
+		return (LCD);
+	else if (ft_strequ(prog, "lpwd"))
+		return (LPWD);
+	else if (ft_strequ(prog, "lls"))
+		return (LLS);
+	return (KO);
 }
 
 static char	is_network_cmd(char *prog)
@@ -86,15 +40,18 @@ static char	is_network_cmd(char *prog)
 	return (0);
 }
 
-static char	is_local_cmd(char *prog)
+static void	init_func(void (*local[3])(char**)
+		, void (*network[6])(char**, char*, int))
 {
-	if (ft_strequ(prog, "lcd"))
-		return (LCD);
-	else if (ft_strequ(prog, "lpwd"))
-		return (LPWD);
-	else if (ft_strequ(prog, "lls"))
-		return (LLS);
-	return (KO);
+	local[0] = local_cd;
+	local[1] = local_pwd;
+	local[2] = local_ls;
+	network[0] = network_quit;
+	network[1] = network_pwd;
+	network[2] = network_ls;
+	network[3] = network_cd;
+//	network[4] = network_;
+//	network[5] = network_;
 }
 
 static char	**get_client_request(char netpwd[250])
@@ -109,7 +66,7 @@ static char	**get_client_request(char netpwd[250])
 	SET_WHITE;
 	l = ft_strtrim(line);
 	request = ft_strsplit(l, ' ');
-	free(request);
+	free(l);
 	return (request);
 }
 
@@ -118,15 +75,24 @@ void		discuss(int sock)
 	char	**request;
 	char	netpwd[250];
 	int		index;
+	void	(*local[3])(char**);
+	void	(*network[6])(char**, char*, int);
 
 	ft_init(netpwd);
+	init_func(local, network);
 	while (1)
 	{
-		request = get_client_request();
-		if ((index = is_local_cmd(request[0])))
+		request = get_client_request(netpwd);
+		if ((index = is_local_cmd(request[0])) != KO)
+		{
+			SET_YELLOW;
+			ft_putendl("local");
+			SET_WHITE;
 			local[index](request);
-		else if ((index = is_network_cmd(request[0])))
-			network[index](sock, request);
+		}
+		else if ((index = is_network_cmd(request[0])) != KO)
+			network[index](request, netpwd, sock);
 		free(request);
+		ft_putendl("");
 	}
 }

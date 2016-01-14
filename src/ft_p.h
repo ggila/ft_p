@@ -6,7 +6,7 @@
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/07 18:09:19 by ggilaber          #+#    #+#             */
-/*   Updated: 2016/01/13 14:31:38 by ggilaber         ###   ########.fr       */
+/*   Updated: 2016/01/14 11:42:35 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,17 @@
 
 # define OK 0
 # define KO -1
+
+# define LCD 0
+# define LPWD 1
+# define LLS 2
+
+# define QUIT 0
+# define PWD 1
+# define LS 2
+# define CD 3
+# define GET 4
+# define PUT 5
 
 # define SET_BLACK ft_putstr("\033[1;30m")
 # define SET_WHITE ft_putstr("\033[1;37m")
@@ -94,8 +105,16 @@ int		clientinit(char *addr, int port);
 void	discuss(int sock);
 void	handlecmd(char *str);
 void	send_client(int sock, char *str, char success);
-
-
+char	get_request_status(int sock);
+void	local_ls(char **request);
+void	local_cd(char **request);
+void	local_pwd(char **request);
+void	network_quit(char **request, char *netcwd, int sock);
+void	network_pwd(char **request, char *netcwd, int sock);
+void	network_ls(char **request, char *netcwd, int sock);
+void	network_cd(char **request, char *netcwd, int sock);
+//void	network_(char **request, char *netcwd, int sock)
+//void	network_(char **request, char *netcwd, int sock)
 
 //readline
 //main

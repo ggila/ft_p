@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   handlecmd.c                                        :+:      :+:    :+:   */
+/*   local.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/10/12 18:23:07 by ggilaber          #+#    #+#             */
-/*   Updated: 2016/01/13 11:15:37 by ggilaber         ###   ########.fr       */
+/*   Created: 2016/01/14 08:18:41 by ggilaber          #+#    #+#             */
+/*   Updated: 2016/01/14 11:40:12 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_p.h"
 
-static void	localls(char **tab_cmd)
+void	local_ls(char **request)
 {
 	int	pid;
 	int status;
@@ -21,35 +21,25 @@ static void	localls(char **tab_cmd)
 		ft_putstr("fork() failed");
 	if (pid == 0)
 	{
-		execve("/bin/ls", tab_cmd, NULL);
+		execve("/bin/ls", request, NULL);
 		ft_putstr("execve() failed");
 	}
 	else if (waitpid(pid, &status, 0) == -1)
 		ft_putstr("waitpid() failed");
 }
 
-static void	localcmd(char *cmd)
+void	local_cd(char **request)
 {
-	char buf[200];
-	char **tab_cmd;
-
-	tab_cmd = ft_strsplit(cmd, ' ');
-	SET_BLUE;
-	ft_putstr("local\n");
-	SET_WHITE;
-	if (ft_strequ(cmd, "pwd"))
-		ft_putendl(getcwd(buf, 200));
-	else if (ft_strnequ(cmd, "cd", 2))
-		chdir(tab_cmd[1]);
-	else if (ft_strnequ(cmd, "ls", 2))
-		localls(tab_cmd);
-	free(tab_cmd);
+	if (request[1] == NULL)
+		return;
+	if (chdir(request[1]) == -1)
+		ft_putendl("lcd failed, probably cause dir does not exist");
 }
 
-void		handlecmd(char *cmd)
+void	local_pwd(char **request)
 {
-	if (ft_strequ(cmd, "exit"))
-		ft_quit_ok();
-	else if (cmd[0] == 'l')
-		localcmd(++cmd);
+	char	buf[200];
+
+	(void)request;
+	ft_putendl(getcwd(buf, 200));
 }

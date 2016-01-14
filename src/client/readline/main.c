@@ -6,7 +6,7 @@
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/08/21 09:49:35 by ggilaber          #+#    #+#             */
-/*   Updated: 2016/01/13 14:44:18 by ggilaber         ###   ########.fr       */
+/*   Updated: 2016/01/14 12:00:31 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	ft_prompt(char *netpwd)
 {
 	char	buf[1000];
 
+	SET_BLACK;
 	ft_putstr(" \\------> loc: ");
 	SET_BLUE;
 	getcwd(buf, 1000);

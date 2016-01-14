@@ -25,7 +25,9 @@ NAME = client
 SRC = main.c\
 	clientinit.c\
 	discuss.c\
-	handlecmd.c\
+	local.c\
+	network.c\
+	request_status.c\
 	readline/main.c\
 	readline/readline.c\
 	readline/keymap.c\
