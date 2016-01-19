@@ -6,7 +6,7 @@
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/08 22:07:17 by ggilaber          #+#    #+#             */
-/*   Updated: 2016/01/13 14:44:54 by ggilaber         ###   ########.fr       */
+/*   Updated: 2016/01/19 20:46:37 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	addtoglobal(int csock)
 	return (OK);
 }
 
-static void	newclient(int sock, fd_set *all)
+static void	newclient(int sock, fd_set *all, int *max_sock)
 {
 	struct sockaddr_in	client_sin;
 	unsigned int		cs_len;
@@ -45,8 +45,8 @@ static void	newclient(int sock, fd_set *all)
 		ft_putstr("too much client right now\n");
 		return ;
 	}
-	if (client_sock > g_max)
-		g_max = client_sock;
+	if (client_sock > *max_sock)
+		*max_sock = client_sock;
 	FD_SET(client_sock, all);
 	printclient();
 	return ;
@@ -66,17 +66,19 @@ void		serverloop(int sock)
 {
 	fd_set 	fds;
 	fd_set 	all;
+	int	max_sock;
 
+	max_sock = sock;
 	FD_ZERO(&all);
 	FD_SET(sock, &all);
 	while (1)
 	{
 		FD_ZERO(&fds);
 		FD_COPY(&all, &fds);
-		if (select(g_max + 1, &fds, NULL, NULL, NULL) == -1)
+		if (select(max_sock + 1, &fds, NULL, NULL, NULL) == -1)
 			quit("select() error");
 		if (FD_ISSET(sock, &fds))
-			newclient(sock, &all);
+			newclient(sock, &all, &max_sock);
 		checkclient(&fds, &all);
 	}
 }

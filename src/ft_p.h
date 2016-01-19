@@ -6,7 +6,7 @@
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/07 18:09:19 by ggilaber          #+#    #+#             */
-/*   Updated: 2016/01/19 16:42:24 by ggilaber         ###   ########.fr       */
+/*   Updated: 2016/01/19 20:41:36 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ t_screen		g_disp;
 
 
 t_client		g_client[NB_CONNEX + 2];
-int				g_max;
+//int				g_max;
 
 //serveur
 void	quit(char *str);

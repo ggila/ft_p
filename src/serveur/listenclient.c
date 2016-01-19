@@ -6,7 +6,7 @@
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/11 15:58:37 by ggilaber          #+#    #+#             */
-/*   Updated: 2016/01/19 16:22:53 by ggilaber         ###   ########.fr       */
+/*   Updated: 2016/01/19 20:44:22 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,9 @@
 
 static char	checkpath(char *request, char buf[250])
 {
-	char		cwd[100];
 	struct stat	buf_stat;
 
-	buf[0] = '\0';
-	ft_strcat(buf, getcwd(cwd, 100));
-	ft_strcat(buf, "/basedir/");
+	ft_strcat(buf, "/");
 	if (request == NULL)
 		return (OK);
 	ft_strcat(buf, request);
@@ -31,9 +28,15 @@ static char	checkpath(char *request, char buf[250])
 
 static void	net_cd(int sock, char **request)
 {
+	char	cwd[100];
 	char	buf[250];
+	size_t	len_rootpath;
 	int		i;
 
+	buf[0] = '\0';
+	ft_strcat(buf, getcwd(cwd, 100));
+	ft_strcat(buf, "/basedir");
+	len_rootpath = ft_strlen(buf);
 	if (checkpath(request[1], buf) == OK)
 	{
 		i = 0;
@@ -41,7 +44,7 @@ static void	net_cd(int sock, char **request)
 			i++;
 		g_client[i].netpwd[0] = 0;
 		ft_strcat(g_client[i].netpwd, buf);
-		send_client(sock, buf, OK);
+		send_client(sock, (void *)buf + len_rootpath, OK);
 	}
 	else
 		send_client(sock, "dir does not exist", KO);

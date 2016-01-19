@@ -6,7 +6,7 @@
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/07 18:03:55 by ggilaber          #+#    #+#             */
-/*   Updated: 2016/01/13 16:52:33 by ggilaber         ###   ########.fr       */
+/*   Updated: 2016/01/19 20:46:50 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ int			main(int ac, char **av)
 	ft_memset(g_client, 0, NB_CONNEX + 1);
 	if ((sock = serverinit(port)) == KO)
 		return (KO);
-	g_max = sock;
 	serverloop(sock);
 	close(sock);
 	return (OK);
