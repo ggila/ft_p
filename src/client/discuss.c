@@ -6,15 +6,17 @@
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/11 20:59:38 by ggilaber          #+#    #+#             */
-/*   Updated: 2016/01/19 16:47:53 by ggilaber         ###   ########.fr       */
+/*   Updated: 2016/01/19 17:35:26 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_p.h"
 
-static void	init_func(void (*local[3])(char**)
+static void	init(char netpwd[250], void (*local[3])(char**)
 		, void (*network[6])(char**, char*, int))
 {
+	ft_bzero(netpwd, 250);
+	netpwd[0] = '/';
 	local[0] = local_cd;
 	local[1] = local_pwd;
 	local[2] = local_ls;
@@ -73,8 +75,7 @@ void		discuss(int sock)
 	void	(*local[3])(char**);
 	void	(*network[6])(char**, char*, int);
 
-	ft_bzero(netpwd, 250);
-	init_func(local, network);
+	init(netpwd, local, network);
 	while (1)
 	{
 		request = get_client_request(netpwd);

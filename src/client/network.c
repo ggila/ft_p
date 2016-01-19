@@ -6,13 +6,13 @@
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/14 09:30:24 by ggilaber          #+#    #+#             */
-/*   Updated: 2016/01/19 16:41:42 by ggilaber         ###   ########.fr       */
+/*   Updated: 2016/01/19 17:42:08 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_p.h"
 
-char	is_network_cmd(char *prog)
+char			is_network_cmd(char *prog)
 {
 	if (ft_strequ(prog, "quit"))
 		return (QUIT);
@@ -29,19 +29,27 @@ char	is_network_cmd(char *prog)
 	return (KO);
 }
 
-static char	get_request_status(int sock)
+static ssize_t	read_sock(int sock, char *buf, size_t n)
 {
-	char	b;
-	int		r;
+	ssize_t	r;
 
-	if ((r = read(sock, &b, 1)) == -1)
+	if ((r = read(sock, buf, n)) == -1)
 	{
 		ft_putstr("read() failed()");
 		exit(0);
 	}
-	if (b == OK)
+	return r;
+}
+
+static char	get_request_status(int sock)
+{
+	char	buf[200];
+	int		r;
+
+	r = read_sock(sock, buf, 1);
+	if (*buf == OK)
 	{
-		SET_YELLOW;
+		SET_BLUE;
 		ft_putstr("OK\n");
 		SET_WHITE;
 		return (OK);
@@ -49,8 +57,10 @@ static char	get_request_status(int sock)
 	else
 	{
 		SET_RED;
-		ft_putstr("KO");
-		//write error message send by server
+		ft_putstr("KO: ");
+		r = read_sock(sock, buf, 200);
+		buf[r] = 0;
+		write(1, buf, r);
 		return (KO);
 	}
 }
@@ -105,14 +115,13 @@ void	network_ls(char **request, char *netcwd, int sock)
 	char	buf[250];
 	int		r;
 
-	(void)request;
 	(void)netcwd;
 	buf[0] = 0;
 	while (*request)
 	{
 		ft_strcat(buf, *request);
 		ft_strcat(buf, " ");
-		(*request)++;
+		request++;
 	}
 	write(sock, buf, ft_strlen(buf));
 	if (get_request_status(sock) == OK)
