@@ -26,19 +26,7 @@ SRC = main.c\
 	clientinit.c\
 	discuss.c\
 	local.c\
-	network.c\
-	request_status.c\
-	readline/main.c\
-	readline/readline.c\
-	readline/keymap.c\
-	readline/fleche.c\
-	readline/updatepos.c\
-	readline/lineinsert.c\
-	readline/screeninsert.c\
-	readline/linedel.c\
-	readline/movecur.c\
-	readline/quit.c\
-	readline/hist.c
+	network.c
 
 OBJ_DIR = obj
 OBJ = $(SRC:.c=.o)

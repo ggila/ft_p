@@ -6,7 +6,7 @@
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/07 18:09:19 by ggilaber          #+#    #+#             */
-/*   Updated: 2016/01/14 11:42:35 by ggilaber         ###   ########.fr       */
+/*   Updated: 2016/01/19 16:42:24 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,13 +99,14 @@ void	serverloop(int socket);
 void	listenclient(int sock, fd_set *all);
 void	printclient(void);
 void	dropclient(int sock, fd_set *all);
+char	is_network_cmd(char *prog);
 
 //client
 int		clientinit(char *addr, int port);
 void	discuss(int sock);
 void	handlecmd(char *str);
 void	send_client(int sock, char *str, char success);
-char	get_request_status(int sock);
+char	is_local_cmd(char *prog);
 void	local_ls(char **request);
 void	local_cd(char **request);
 void	local_pwd(char **request);
@@ -115,44 +116,5 @@ void	network_ls(char **request, char *netcwd, int sock);
 void	network_cd(char **request, char *netcwd, int sock);
 //void	network_(char **request, char *netcwd, int sock)
 //void	network_(char **request, char *netcwd, int sock)
-
-//readline
-//main
-int		ft_putchar_tputs(int c);
-void	ft_tabcpy(char *line, char temp[], int cur);
-void	ft_prompt(char *netpwd);
-void	ft_edit_init(int *cur);
-void	ft_lineclr(char *line);
-void	ft_init_term(void);
-void	ft_init_hist(void);
-void	ft_init_screen(void);
-void	ft_init(char *netpwd);
-//ft_get_cmd.c
-void	ft_get_cmd(char line[]);
-//key_map.c
-int		ft_is_map(char c);
-void	ft_map(char *buf, int *cur, char *line);
-//hist.c
-void	ft_save_hist(char *line);
-void	ft_free_hist(void);
-//flech.c
-void	ft_fleche(char c, int *cur, char *line);
-void	ft_hist(char c, int *cur, char *line);
-//line_del
-void	ft_del(int cur, char *line);
-void	ft_del_pre(int *cur, char *line);
-//line_insert
-void	ft_insert(char *line, char c, int *cur);
-//screen_insert
-void	ft_screen_insert(char c, char *line);
-//update_pos.c
-void	ft_update_screen_insert_pos(int len);
-//move_cur.c
-void	ft_go_upright(void);
-void	ft_go_downleft(void);
-//quit.c
-void	ft_error(char *str);
-void	ft_quit_ok(void);
-void	ft_restore_term(void);
 
 #endif

@@ -6,16 +6,27 @@
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/14 08:18:41 by ggilaber          #+#    #+#             */
-/*   Updated: 2016/01/14 11:40:12 by ggilaber         ###   ########.fr       */
+/*   Updated: 2016/01/19 16:36:17 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_p.h"
 
+char	is_local_cmd(char *prog)
+{
+	if (ft_strequ(prog, "lcd"))
+		return (LCD);
+	else if (ft_strequ(prog, "lpwd"))
+		return (LPWD);
+	else if (ft_strequ(prog, "lls"))
+		return (LLS);
+	return (KO);
+}
+
 void	local_ls(char **request)
 {
 	int	pid;
-	int status;
+	int	status;
 
 	if ((pid = fork()) == -1)
 		ft_putstr("fork() failed");
