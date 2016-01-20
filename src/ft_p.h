@@ -6,7 +6,7 @@
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/07 18:09:19 by ggilaber          #+#    #+#             */
-/*   Updated: 2016/01/19 20:41:36 by ggilaber         ###   ########.fr       */
+/*   Updated: 2016/01/20 18:17:22 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,17 +80,7 @@ typedef struct	s_hll
 	char			*line;
 }				t_hll;
 
-
-char			g_flag;
-struct termios	g_term;
-struct termios	g_term_init;
-t_hll			*g_hist;
-t_screen		g_disp;
-
-
-
 t_client		g_client[NB_CONNEX + 2];
-//int				g_max;
 
 //serveur
 void	quit(char *str);
@@ -107,13 +97,21 @@ void	discuss(int sock);
 void	handlecmd(char *str);
 void	send_client(int sock, char *str, char success);
 char	is_local_cmd(char *prog);
+
 void	local_ls(char **request);
 void	local_cd(char **request);
 void	local_pwd(char **request);
-void	network_quit(char **request, char *netcwd, int sock);
-void	network_pwd(char **request, char *netcwd, int sock);
-void	network_ls(char **request, char *netcwd, int sock);
-void	network_cd(char **request, char *netcwd, int sock);
+
+//void	network_quit(char **request, char *netcwd, int sock);
+//void	network_pwd(char **request, char *netcwd, int sock);
+//void	network_ls(char **request, char *netcwd, int sock);
+//void	network_cd(char **request, char *netcwd, int sock);
+
+void	network_quit(int sock);
+void	network_pwd(int sock, char *netpwd);
+void	network_cd(int sock, char *netpwd, char **request);
+void	network_ls(int sock, char *netcwd, char **request);
+
 //void	network_(char **request, char *netcwd, int sock)
 //void	network_(char **request, char *netcwd, int sock)
 

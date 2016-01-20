@@ -6,14 +6,14 @@
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/11 20:59:38 by ggilaber          #+#    #+#             */
-/*   Updated: 2016/01/19 17:35:26 by ggilaber         ###   ########.fr       */
+/*   Updated: 2016/01/20 18:17:11 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_p.h"
 
 static void	init(char netpwd[250], void (*local[3])(char**)
-		, void (*network[6])(char**, char*, int))
+		, void (*network[6])())
 {
 	ft_bzero(netpwd, 250);
 	netpwd[0] = '/';
@@ -73,7 +73,7 @@ void		discuss(int sock)
 	char	netpwd[250];
 	int		index;
 	void	(*local[3])(char**);
-	void	(*network[6])(char**, char*, int);
+	void	(*network[6])();
 
 	init(netpwd, local, network);
 	while (1)
@@ -87,7 +87,7 @@ void		discuss(int sock)
 			local[index](request);
 		}
 		else if ((index = is_network_cmd(request[0])) != KO)
-			network[index](request, netpwd, sock);
+			network[index](sock, netpwd, request);
 		else
 			ft_putendl("unkown command");
 		free(request);

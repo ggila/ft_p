@@ -6,7 +6,7 @@
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/14 09:30:24 by ggilaber          #+#    #+#             */
-/*   Updated: 2016/01/19 17:42:08 by ggilaber         ###   ########.fr       */
+/*   Updated: 2016/01/20 18:17:48 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,36 +65,23 @@ static char	get_request_status(int sock)
 	}
 }
 
-void	network_quit(char **request, char *netcwd, int sock)
+void	network_quit(int sock)
 {
-	(void)request;
-	(void)netcwd;
 	write(sock, "quit", 4);
 	exit(0);
 }
 
-void	network_pwd(char **request, char *netcwd, int sock)
+void	network_pwd(int sock, char *netpwd)
 {
-	char	buf[250];
-	int		r;
+	(void)sock;
 
-	(void)request;
-	(void)netcwd;
-	write(sock, "pwd", 3);
-	if (get_request_status(sock) == OK)
-	{
-		if ((r = read(sock, buf, 250)) == -1)
-		{
-			ft_putendl("read() failed()");
-			exit(0);
-		}
-		write(1, buf, r);
-	}
-	ft_putendl("");
+	SET_BLUE;
+	ft_putstr("OK\n");
+	SET_WHITE;
+	ft_putendl(netpwd);
 }
 
-
-void	network_cd(char **request, char *netpwd, int sock)
+void	network_cd(int sock, char *netpwd, char **request)
 {
 	char	buf[250];
 
@@ -109,8 +96,7 @@ void	network_cd(char **request, char *netpwd, int sock)
 	}
 }
 
-
-void	network_ls(char **request, char *netcwd, int sock)
+void	network_ls(int sock, char *netcwd, char **request)
 {
 	char	buf[250];
 	int		r;
