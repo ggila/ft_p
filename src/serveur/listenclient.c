@@ -6,7 +6,7 @@
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/11 15:58:37 by ggilaber          #+#    #+#             */
-/*   Updated: 2016/01/19 20:44:22 by ggilaber         ###   ########.fr       */
+/*   Updated: 2016/01/21 10:54:43 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,9 +108,14 @@ void		listenclient(int sock, fd_set *all)
 		ft_putendl("read() failed()");
 		exit(0);
 	}
-	buf[r] = 0;
-	ft_putendl(buf);
-	request = ft_strsplit(buf, ' ');
-	handle_request(request, sock, all);
-	free(request);
+	else if (r == 0)
+		dropclient(sock, all);
+	else
+	{
+		buf[r] = 0;
+		ft_putendl(buf);
+		request = ft_strsplit(buf, ' ');
+		handle_request(request, sock, all);
+		free(request);
+	}
 }
