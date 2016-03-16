@@ -18,6 +18,12 @@ C_GREY =		\033[1;37m
 
 CC = gcc
 
+LIB = libft\
+	ft_printf
+LIB_DIR = $(addsuffix /, $(addprefix ../, $(LIB)))
+LIB_INC = $(addprefix -I./, $(LIB_DIR))
+LIB_A = $(join $(LIB_DIR), $(addsuffix .a, $(LIB)))
+
 FLAGS = -Wall -Werror -Wextra
 
 NAME = serveur
@@ -30,27 +36,25 @@ SRC = main.c\
 	  dropclient.c\
 	  send_client.c
 
+INC = -I../../inc\
+	  -I../lib/inc
+
 OBJ_DIR = obj
-OBJ = $(SRC:.c=.o)
-OBJ_PATH = $(addprefix $(OBJ_DIR)/, $(OBJ))
-
-INC = -I../\
-	  -I../libft/inc
-
-HEADER = $(addprefix $(inc), $(NAME).h)
+OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
 all : $(NAME)
 
-$(NAME) : $(OBJ_PATH)
-	@$(CC) $(FLAGS) -o $(NAME) $(OBJ_PATH) ../libft/libft.a
+$(NAME) : $(OBJ) $(LIB_A)
+	@$(CC) $(FLAGS) -o $(NAME) $(OBJ_PATH)
 
-$(OBJ_DIR)/%.o : %.c
-	@echo "\t$(C_BLACK)gcc -f -c $^ -o .o$(C_DEFAULT)"
-	@mkdir -p obj/lib
-	@$(CC) $(FLAGS) $(INC) -c $^ -o $@
+$(OBJ_DIR)/%.o : %.c | $(OBJ_DIR)
+	@$(CC) $(FLAGS) $(INC) -c $< -o $@
+
+$(OBJ_DIR):
+	mkdir obj
 
 clean :
-	@rm -rf $(OBJ_PATH)
+	@rm -rf $(OBJ_DIR)
 
 fclean : clean
 	@rm -rf $(NAME)

@@ -6,11 +6,12 @@
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/08 22:07:17 by ggilaber          #+#    #+#             */
-/*   Updated: 2016/01/19 20:46:37 by ggilaber         ###   ########.fr       */
+/*   Updated: 2016/03/16 15:36:28 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_p.h"
+#include "ft_printf.h"
 
 static int	addtoglobal(int csock)
 {
@@ -37,12 +38,12 @@ static void	newclient(int sock, fd_set *all, int *max_sock)
 	if ((client_sock = accept(sock, (struct sockaddr*)&client_sin, &cs_len))
 			== -1)
 	{
-		ft_putstr("accept() failed\n");
+		ft_printf("accept() failed\n");
 		return ;
 	}
 	if (addtoglobal(client_sock) == KO)
 	{
-		ft_putstr("too much client right now\n");
+		ft_printf("too much client right now\n");
 		return ;
 	}
 	if (client_sock > *max_sock)

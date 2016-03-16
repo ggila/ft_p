@@ -6,11 +6,12 @@
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/07 18:03:55 by ggilaber          #+#    #+#             */
-/*   Updated: 2016/01/19 20:46:50 by ggilaber         ###   ########.fr       */
+/*   Updated: 2016/03/16 15:34:55 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_p.h"
+#include "ft_printf.h"
 
 void		quit(char *str)
 {
@@ -19,16 +20,13 @@ void		quit(char *str)
 	i = -1;
 	while (g_client[++i].sock)
 		close(g_client[i].sock);
-	ft_putstr(str);
-	ft_putstr("\n");
+	ft_printf("%s\n", str);
 	exit(KO);
 }
 
 static void	usage(char *prog)
 {
-	ft_putstr("Usage: ");
-	ft_putstr(prog);
-	ft_putstr(" <port>\n");
+	ft_printf("Usage: %s <port>", prog);
 	exit(KO);
 }
 
@@ -39,7 +37,7 @@ static char	is_basedir(void)
 	if ((stat("./basedir/", &buf) == -1)
 			|| (!S_ISDIR(buf.st_mode)))
 	{
-		ft_putendl("basedir/ should be present");
+		ft_printf("basedir/ should be present\n");
 		return (KO);
 	}
 	return (OK);

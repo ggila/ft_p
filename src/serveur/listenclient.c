@@ -6,11 +6,13 @@
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/11 15:58:37 by ggilaber          #+#    #+#             */
-/*   Updated: 2016/01/21 10:54:43 by ggilaber         ###   ########.fr       */
+/*   Updated: 2016/03/16 15:45:54 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_p.h"
+#include "libft.h"
+#include "ft_printf.h"
 
 static char	checkpath(char *request, char buf[250])
 {
@@ -67,13 +69,13 @@ static void	net_ls(char **request, int sock)
 
 	if ((pid = fork()) == -1)
 	{
-		ft_putstr("execve");
+		ft_printf("execve");
 		send_client(sock, "fork() failed", KO);
 	}
 	if (pid == 0)
 	{
 		dup2(sock, 1);
-		ft_putchar_fd(OK, sock);
+		ft_printf_fd(sock, "%c", OK);
 		execve("/bin/ls", request, NULL);
 		send_client(sock, "execve() failed", KO);
 	}
@@ -105,7 +107,7 @@ void		listenclient(int sock, fd_set *all)
 
 	if ((r = read(sock, buf, 250)) == -1)
 	{
-		ft_putendl("read() failed()");
+		ft_printf("read() failed()\n");
 		exit(0);
 	}
 	else if (r == 0)
@@ -113,7 +115,7 @@ void		listenclient(int sock, fd_set *all)
 	else
 	{
 		buf[r] = 0;
-		ft_putendl(buf);
+		ft_printf("%s\n", buf);
 		request = ft_strsplit(buf, ' ');
 		handle_request(request, sock, all);
 		free(request);
