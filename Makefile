@@ -6,7 +6,7 @@
 #    By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/10/08 19:45:49 by ggilaber          #+#    #+#              #
-#    Updated: 2016/03/16 15:01:36 by ggilaber         ###   ########.fr        #
+#    Updated: 2016/03/23 09:27:31 by ggilaber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@
 LIB = libft\
 	hash_tables\
 	ft_printf
-LIB_DIR = $(addsuffix /, $(addprefix lib/, $(LIB)))
+LIB_DIR = $(addsuffix /, $(addprefix src/lib/, $(LIB)))
 LIB_INC = $(addprefix -I./, $(LIB_DIR))
 LIB_A = $(join $(LIB_DIR), $(addsuffix .a, $(LIB)))
 
@@ -32,17 +32,21 @@ client: $(LIBA_A)
 	@make -C src/client/
 	@mv src/client/client .
 
-$(LIB_A):
+$(LIB_A): $(LIB_DIR)
 	@echo 'build $(notdir $@)'
 	@make -C $(dir $@)
 	@make clean -C $(dir $@)
+
+$(LIB_DIR):
+	git submodule init
+	git submodule update
 
 clean:
 	make -C src/client clean
 	make -C src/serveur clean
 
 fclean: clean
-	make -C src/libft fclean
+	for l in $(LIB_DIR); do make -C $$l fclean; done
 	rm -f serveur client
 
 re: fclean all
