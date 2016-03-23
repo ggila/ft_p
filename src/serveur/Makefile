@@ -20,7 +20,7 @@ CC = gcc
 
 LIB = libft\
 	ft_printf
-LIB_DIR = $(addsuffix /, $(addprefix ../, $(LIB)))
+LIB_DIR = $(addsuffix /, $(addprefix ../lib/, $(LIB)))
 LIB_INC = $(addprefix -I./, $(LIB_DIR))
 LIB_A = $(join $(LIB_DIR), $(addsuffix .a, $(LIB)))
 
@@ -45,7 +45,12 @@ OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 all : $(NAME)
 
 $(NAME) : $(OBJ) $(LIB_A)
-	@$(CC) $(FLAGS) -o $(NAME) $(OBJ_PATH)
+	@$(CC) $(FLAGS) -o $(NAME) $(LIB_A) $(OBJ)
+
+$(LIB_A): $(LIB_DIR)
+	@echo 'build $(notdir $@)'
+	@make -C $(dir $@)
+	@make clean -C $(dir $@)
 
 $(OBJ_DIR)/%.o : %.c | $(OBJ_DIR)
 	@$(CC) $(FLAGS) $(INC) -c $< -o $@

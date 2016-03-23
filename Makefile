@@ -6,7 +6,7 @@
 #    By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/10/08 19:45:49 by ggilaber          #+#    #+#              #
-#    Updated: 2016/03/23 09:27:31 by ggilaber         ###   ########.fr        #
+#    Updated: 2016/03/23 09:35:16 by ggilaber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ serveur: $(LIB_A)
 	@make -C src/serveur/
 	@mv src/serveur/serveur .
 
-client: $(LIBA_A)
+client: $(LIB_A)
 	@echo "make client"
 	@make -C src/client/
 	@mv src/client/client .
