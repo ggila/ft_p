@@ -6,7 +6,7 @@
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/07 18:03:55 by ggilaber          #+#    #+#             */
-/*   Updated: 2016/03/16 15:34:55 by ggilaber         ###   ########.fr       */
+/*   Updated: 2016/03/29 20:20:21 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int			main(int ac, char **av)
 	port = ft_atoi(av[1]);
 	if (is_basedir() == KO)
 		return (OK);
-	ft_memset(g_client, 0, NB_CONNEX + 1);
+	ft_bzero(g_client, sizeof(t_client) * (NB_CONNEX + 2));
 	if ((sock = serverinit(port)) == KO)
 		return (KO);
 	serverloop(sock);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   serverinit.c                                       :+:      :+:    :+:   */
+/*   clientinit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/07 18:12:03 by ggilaber          #+#    #+#             */
-/*   Updated: 2016/03/29 15:17:51 by ggilaber         ###   ########.fr       */
+/*   Updated: 2016/03/29 19:17:23 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	clientinit(char *addr, int port)
 		return (KO);
 	}
 	sininit(&sin, addr, port);
-	if (connect(sock, (const struct sockaddr *) &sin, sizeof(sin)) == -1)
+	if (connect(sock, (const struct sockaddr*)&sin, sizeof(sin)) == -1)
 	{
 		ft_printf("connect() error\n");
 		return (KO);

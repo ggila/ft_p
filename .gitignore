@@ -5,4 +5,4 @@ client
 serveur
 src/client/client
 src/serveur/serveur
-*.a
+cscope.out
