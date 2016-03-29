@@ -6,7 +6,7 @@
 #    By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/10/08 19:45:49 by ggilaber          #+#    #+#              #
-#    Updated: 2016/03/23 09:35:16 by ggilaber         ###   ########.fr        #
+#    Updated: 2016/03/29 16:07:19 by ggilaber         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,21 +23,19 @@ LIB_A = $(join $(LIB_DIR), $(addsuffix .a, $(LIB)))
 all: serveur client
 
 serveur: $(LIB_A)
-	@echo "make serveur"
-	@make -C src/serveur/
-	@mv src/serveur/serveur .
+	make -C src/serveur/
+	@ln -fs src/serveur/serveur serveur
 
 client: $(LIB_A)
-	@echo "make client"
-	@make -C src/client/
-	@mv src/client/client .
+	make -C src/client/
+	@ln -fs src/client/client client
 
-$(LIB_A): $(LIB_DIR)
+$(LIB_A): src/lib/.git
 	@echo 'build $(notdir $@)'
 	@make -C $(dir $@)
 	@make clean -C $(dir $@)
 
-$(LIB_DIR):
+src/lib/.git:
 	git submodule init
 	git submodule update
 
@@ -48,5 +46,6 @@ clean:
 fclean: clean
 	for l in $(LIB_DIR); do make -C $$l fclean; done
 	rm -f serveur client
+	@echo
 
 re: fclean all

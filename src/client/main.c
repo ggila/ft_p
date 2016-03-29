@@ -6,17 +6,16 @@
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/07 18:03:55 by ggilaber          #+#    #+#             */
-/*   Updated: 2016/01/12 18:52:50 by ggilaber         ###   ########.fr       */
+/*   Updated: 2016/03/29 15:14:47 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_p.h"
+#include "ft_printf.h"
 
 static void	usage(char *prog)
 {
-	ft_putstr("Usage: ");
-	ft_putstr(prog);
-	ft_putstr(" <adress> <port>\n");
+	ft_printf("Usage: %s <adress> <port>\n", prog);
 	exit(KO);
 }
 

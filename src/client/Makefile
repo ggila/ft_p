@@ -20,6 +20,12 @@ CC = gcc
 
 FLAGS = -Wall -Werror -Wextra
 
+LIB = libft\
+	ft_printf
+LIB_DIR = $(addsuffix /, $(addprefix ../lib/, $(LIB)))
+LIB_INC = $(addprefix -I./, $(LIB_DIR))
+LIB_A = $(join $(LIB_DIR), $(addsuffix .a, $(LIB)))
+
 NAME = client
 
 SRC = main.c\
@@ -28,27 +34,32 @@ SRC = main.c\
 	local.c\
 	network.c
 
+
+
+INC = -I../../inc\
+	  -I../lib/inc
+
 OBJ_DIR = obj
-OBJ = $(SRC:.c=.o)
-OBJ_PATH = $(addprefix $(OBJ_DIR)/, $(OBJ))
-
-INC = -I../\
-	  -I../libft/inc
-
-HEADER = $(addprefix $(inc), $(NAME).h)
+OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 
 all : $(NAME)
 
-$(NAME) : $(OBJ_PATH)
-	@$(CC) $(FLAGS) -o $(NAME) $(OBJ_PATH) ../libft/libft.a -ltermcap
+$(NAME) : $(OBJ) $(LIB_A)
+	$(CC) $(FLAGS) -o $(NAME) $(LIB_A) $(OBJ)
 
-$(OBJ_DIR)/%.o : %.c
-	@echo "\t$(C_BLACK)gcc -f -c $^ -o .o$(C_DEFAULT)"
-	@mkdir -p obj/readline
-	@$(CC) $(FLAGS) $(INC) -c $^ -o $@
+$(LIB_A): ../lib/.git
+	@echo 'build $(notdir $@)'
+	@make -C $(dir $@)
+	@make clean -C $(dir $@)
+
+$(OBJ_DIR)/%.o : %.c | $(OBJ_DIR)
+	$(CC) $(FLAGS) $(INC) -c $< -o $@
+
+$(OBJ_DIR):
+	@mkdir obj
 
 clean :
-	@rm -rf $(OBJ_PATH)
+	@rm -rf $(OBJ_DIR)
 
 fclean : clean
 	@rm -rf $(NAME)
@@ -59,6 +70,3 @@ sw :
 	rm -rf **/.*.sw[po]
 	rm -rf **/.*.h.gch
 	rm -rf ./inc/$(NAME).h.gch
-
-test :
-	gcc -o test.out test.c
