@@ -6,11 +6,12 @@
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/11 20:59:38 by ggilaber          #+#    #+#             */
-/*   Updated: 2016/01/20 18:17:11 by ggilaber         ###   ########.fr       */
+/*   Updated: 2016/03/29 15:30:14 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_p.h"
+#include "ft_printf.h"
 
 static void	init(char netpwd[250], void (*local[3])(char**)
 		, void (*network[6])())
@@ -33,22 +34,21 @@ void	ft_prompt(char *netpwd)
 	char	buf[1000];
 
 	SET_BLACK;
-	ft_putstr(" \\------> loc: ");
+	ft_printf(" \\------> loc: ");
 	SET_BLUE;
 	getcwd(buf, 1000);
-	ft_putendl(buf);
+	ft_printf("%s\n", buf);
 	SET_BLACK;
-	ft_putstr("   \\----> net: ");
+	ft_printf("   \\----> net: ");
 	SET_YELLOW;
-	ft_putendl(netpwd);
+	ft_printf("%s\n", netpwd);
 	SET_BLACK;
-	ft_putstr("     \\-------> ");
+	ft_printf("     \\-------> ");
 }
 
 static char	**get_client_request(char netpwd[250])
 {
 	char	line[250];
-	char	*l;
 	char	**request;
 	int		r;
 
@@ -56,14 +56,12 @@ static char	**get_client_request(char netpwd[250])
 	SET_BLACK;
 	if ((r = read(0, line, 250)) == -1)
 	{
-		ft_putendl("read() failed");
+		ft_printf("read() failed\n");
 		exit(KO);
 	}
 	line[r - 1] = 0;
 	SET_WHITE;
-	l = ft_strtrim(line);
-	request = ft_strsplit(l, ' ');
-	free(l);
+	request = ft_strsplit(line, ' ');
 	return (request);
 }
 
@@ -82,15 +80,15 @@ void		discuss(int sock)
 		if ((index = is_local_cmd(request[0])) != KO)
 		{
 			SET_YELLOW;
-			ft_putendl("local");
+			ft_printf("local\n");
 			SET_WHITE;
 			local[index](request);
 		}
 		else if ((index = is_network_cmd(request[0])) != KO)
 			network[index](sock, netpwd, request);
 		else
-			ft_putendl("unkown command");
+			ft_printf("unkown command\n");
 		free(request);
-		ft_putendl("");
+		ft_printf("\n");
 	}
 }

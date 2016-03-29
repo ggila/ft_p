@@ -6,7 +6,7 @@
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/07 18:09:19 by ggilaber          #+#    #+#             */
-/*   Updated: 2016/01/20 18:17:22 by ggilaber         ###   ########.fr       */
+/*   Updated: 2016/03/29 15:20:51 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,11 @@
 # define GET 4
 # define PUT 5
 
-# define SET_BLACK ft_putstr("\033[1;30m")
-# define SET_WHITE ft_putstr("\033[1;37m")
-# define SET_BLUE ft_putstr("\033[1;34m")
-# define SET_YELLOW ft_putstr("\033[1;33m")
-# define SET_RED ft_putstr("\033[1;31m")
+# define SET_BLACK ft_printf("\033[1;30m")
+# define SET_WHITE ft_printf("\033[1;37m")
+# define SET_BLUE ft_printf("\033[1;34m")
+# define SET_YELLOW ft_printf("\033[1;33m")
+# define SET_RED ft_printf("\033[1;31m")
 
 # define UP 65
 # define DOWN 66

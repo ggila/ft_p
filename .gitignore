@@ -1,4 +1,8 @@
 obj
 *.sw*
 basedir
+client
+serveur
+src/client/client
+src/serveur/serveur
 *.a

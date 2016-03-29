@@ -6,11 +6,12 @@
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/14 09:30:24 by ggilaber          #+#    #+#             */
-/*   Updated: 2016/01/20 18:17:48 by ggilaber         ###   ########.fr       */
+/*   Updated: 2016/03/29 15:32:25 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_p.h"
+#include "ft_printf.h"
 
 char			is_network_cmd(char *prog)
 {
@@ -35,7 +36,7 @@ static ssize_t	read_sock(int sock, char *buf, size_t n)
 
 	if ((r = read(sock, buf, n)) == -1)
 	{
-		ft_putstr("read() failed()");
+		ft_printf("read() failed()");
 		exit(0);
 	}
 	return r;
@@ -50,14 +51,14 @@ static char	get_request_status(int sock)
 	if (*buf == OK)
 	{
 		SET_BLUE;
-		ft_putstr("OK\n");
+		ft_printf("OK\n");
 		SET_WHITE;
 		return (OK);
 	}
 	else
 	{
 		SET_RED;
-		ft_putstr("KO: ");
+		ft_printf("KO: ");
 		r = read_sock(sock, buf, 200);
 		buf[r] = 0;
 		write(1, buf, r);
@@ -76,9 +77,9 @@ void	network_pwd(int sock, char *netpwd)
 	(void)sock;
 
 	SET_BLUE;
-	ft_putstr("OK\n");
+	ft_printf("OK\n");
 	SET_WHITE;
-	ft_putendl(netpwd);
+	ft_printf(netpwd);
 }
 
 void	network_cd(int sock, char *netpwd, char **request)
