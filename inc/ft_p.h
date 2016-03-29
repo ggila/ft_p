@@ -6,7 +6,7 @@
 /*   By: ggilaber <ggilaber@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/10/07 18:09:19 by ggilaber          #+#    #+#             */
-/*   Updated: 2016/03/29 15:20:51 by ggilaber         ###   ########.fr       */
+/*   Updated: 2016/03/29 16:27:47 by ggilaber         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,23 +62,6 @@ typedef struct	s_client
 	int			sock;
 	char		netpwd[200];
 }				t_client;
-
-typedef struct	s_screen
-{
-	int				size;
-	int				cur_line;
-	int				nb_line;
-	int				cur_lines;
-	int				nb_lines;
-	int				pos;
-}				t_screen;
-
-typedef struct	s_hll
-{
-	struct s_hll	*p;
-	struct s_hll	*n;
-	char			*line;
-}				t_hll;
 
 t_client		g_client[NB_CONNEX + 2];
 
