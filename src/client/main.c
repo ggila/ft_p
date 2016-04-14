@@ -40,7 +40,6 @@ int			main(int ac, char **av)
 	handle_sig();
 	if ((sock = clientinit(addr, port)) == KO)
 		return (KO);
-	ft_printf("blabla");
 	discuss(sock);
 	close(sock);
 	return (OK);
